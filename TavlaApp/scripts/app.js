@@ -18,7 +18,8 @@ angular.module('tavla', ['ionic'])
             StatusBar.styleDefault();
         }
 
-        console.info("Device ready!!!!!!!!!", window.plugins);
+        console.info("Device ready, starting!!!!!!!!!", window.plugins);
+
     });
 })
 
@@ -29,6 +30,11 @@ angular.module('tavla', ['ionic'])
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
     $stateProvider
+        .state('login', {
+            url: "/login",
+            templateUrl: "templates/login.html",
+            controller: "LoginController as vm"
+        })
         .state('app', {
             url: "/app",
             abstract: true,
@@ -41,6 +47,11 @@ angular.module('tavla', ['ionic'])
                 'menuContent': {
                     templateUrl: "templates/home.html",
                     controller: "HomeController as vm"
+                }
+            },
+            resolve: {
+                calendarItems: function (CalendarService) {
+                    return CalendarService.getItems();
                 }
             }
         })
@@ -60,6 +71,11 @@ angular.module('tavla', ['ionic'])
                     templateUrl: "templates/settings.html",
                     controller: 'SettingsController as vm'
                 }
+            },
+            resolve: {
+                settings: function (TavlaService) {
+                    return TavlaService.getSettings();
+                }
             }
         });
 
@@ -74,4 +90,20 @@ angular.module('tavla', ['ionic'])
     //});
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/home');
+}).constant('Mocks', {
+    
+    calendars: [
+        { id: '1', name: 'lars.erik.finholt@gmail.com' }
+    ],
+    calendarItems: [
+        { id: '1', name: 'lars.erik.finholt@gmail.com', title: 'TEST title', start: start }
+    ],
+
+    settings: {
+        users: [
+            { id:'1', name:'Lars Erik', calendar:'lars.erik.finholt@gmail.com'},
+            { id: '2', name: 'Camilla', calendar: 'camilla.finholt@gmail.com' }
+        ]
+    }
+
 });

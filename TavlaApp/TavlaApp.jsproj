@@ -159,8 +159,11 @@
     <Content Include="plugins\nl.x-services.plugins.calendar\www\Calendar.js" />
     <Content Include="scripts\app.controller.js" />
     <Content Include="scripts\calendar.controller.js" />
+    <Content Include="scripts\calendar.service.js" />
     <Content Include="scripts\home.controller.js" />
+    <Content Include="scripts\login.controller.js" />
     <Content Include="scripts\settings.controller.js" />
+    <Content Include="scripts\tavla.service.js" />
     <Content Include="templates\settings.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\menu.html" />
