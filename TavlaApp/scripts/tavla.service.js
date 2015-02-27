@@ -24,13 +24,13 @@
                     dfd.resolve('ripple');
                 } else {
                     console.log("Calling authenticate...");
-                    client.login('google').done(function(d) {
+                    client.login('google').done(function (d) {
                         // Azureservice.login('google').then(function () {
                         console.log("Ferdig logget på!");
                         //Azureservice.query('Todos').then(function (d) {
                         console.log("Logged in", d);
                         dfd.resolve({ isLoggedIn: true, user: d.userId });
-                    }, function() {
+                    }, function () {
                         console.warn("Noe gikk feil i pålogging", d);
                         dfd.resolve({ isLoggedIn: false, error: d });
                     });
@@ -39,31 +39,37 @@
                 return dfd.promise;
             },
 
-            login: function() {
+            login: function () {
 
                 var self = this;
                 var dfd = $q.defer();
                 console.log("Calling login...");
                 client.invokeApi('start', {
                     body: null,
-                    method: "get"
+                    method: "get",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
                 }).done(function (d) {
                     // Azureservice.login('google').then(function () {
                     console.log("Ferdig logget på!");
                     //Azureservice.query('Todos').then(function (d) {
-                    console.log("Logged in", d);
+                    console.log("Logged in", d.result);
+                    self.isSettingsLoaded = true;
+                    self.saved = d.result;
                     dfd.resolve(d);
                 }, function (e) {
                     console.warn("Noe gikk feil i pålogging", e);
-                    dfd.resolve({ isLoggedIn: false, error:e});
+                    dfd.resolve({ isLoggedIn: false, error: e });
                 });
 
                 return dfd.promise;
-            
+
             },
 
-            register: function(model) {
-                
+            register: function (model) {
+
                 var self = this;
                 var dfd = $q.defer();
                 console.log("Calling register...");
@@ -74,7 +80,9 @@
                     // Azureservice.login('google').then(function () {
                     console.log("Ferdig registrert på!");
                     //Azureservice.query('Todos').then(function (d) {
-                    console.log("Logged in", d);
+                    console.log("Logged in", d.result);
+                    self.isSettingsLoaded = true;
+                    self.saved = d.result;
                     dfd.resolve({ saved: true, result: d });
                 }, function () {
                     console.warn("Fikk ikke registrert", d);
@@ -91,7 +99,7 @@
                 var dfd = $q.defer();
 
                 var todoItemTable = client.getTable('todoitem');
-                todoItemTable.read().done(function(d) {
+                todoItemTable.read().done(function (d) {
                     dfd.resolve(d);
                 }, function (e) {
                     console.log("Error getting items", e);

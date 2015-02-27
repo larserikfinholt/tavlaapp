@@ -12,7 +12,8 @@
             vm.result = null;
             TavlaService.authenticate().then(function(auth) {
                 console.log("Authentication result:", auth);
-                TavlaService.login().then(function(d) {
+                TavlaService.login().then(function(data) {
+                    var d = data.result;
                     console.log("logged in to Tavla", d);
 
                     vm.result = d;

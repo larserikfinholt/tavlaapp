@@ -1,4 +1,6 @@
 ﻿angular.module('tavla')
-    .controller('HomeController', function($scope, $ionicModal, $timeout) {
+    .controller('HomeController', function(TavlaService) {
 
-    });
+        var vm = this;
+        vm.settings = TavlaService.saved;
+});
