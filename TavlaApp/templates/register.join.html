@@ -1,0 +1,27 @@
+﻿<ion-modal-view>
+   
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button-clear" ng-click="$ionicGoBack()"><i class="ion-arrow-left-c"></i> Back</button>
+        </div>
+        <h1 class="title">Join Family</h1>
+    </ion-header-bar>
+    <ion-content>
+        
+
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Family Name</span>
+                <input type="text" placeholder="Family name">
+            </label>
+         
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Secret word</span>
+                <input type="text" placeholder="You'll get it from the person creating the family account'">
+            </label>
+        </div>
+
+        <button class="button button-block button-calm" ng-click="vm.join()" type="submit">Join family</button>
+        <pre>{{vm|json}}</pre>
+    </ion-content>
+</ion-modal-view>

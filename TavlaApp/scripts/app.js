@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('tavla', ['ionic'])
+angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
 
 .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -34,6 +34,29 @@ angular.module('tavla', ['ionic'])
             url: "/login",
             templateUrl: "templates/login.html",
             controller: "LoginController as vm"
+        })
+        .state('register', {
+            templateUrl: "templates/register.html",
+            controller: "RegisterController as vm",
+            resolve: {
+                mode: function () { return 'select'; }
+            }
+        })
+        .state('newfamily', {
+            templateUrl: "templates/register.newfamily.html",
+            controller: "RegisterController as vm",
+            resolve: {
+                mode: function() { return 'newfamily'; }
+            }
+        })
+        .state('join', {
+            templateUrl: "templates/register.join.html",
+            controller: "RegisterController as vm",
+            resolve: {
+                mode: function () { return 'join'; }
+            }
+
+
         })
         .state('app', {
             url: "/app",
@@ -89,21 +112,28 @@ angular.module('tavla', ['ionic'])
     //    }
     //});
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/home');
-}).constant('Mocks', {
-    
-    calendars: [
-        { id: '1', name: 'lars.erik.finholt@gmail.com' }
-    ],
-    calendarItems: [
-        { id: '1', name: 'lars.erik.finholt@gmail.com', title: 'TEST title', start: start }
-    ],
+    $urlRouterProvider.otherwise('/login');
+})
+ .constant('AzureMobileServiceClient',
+ {
+     API_URL: "https://tavla-service.azure-mobile.net/",
+     API_KEY: 'bPNdSHXgGsxOxvCcDzxBybTCxNtbIb24'
+ })
 
-    settings: {
-        users: [
-            { id:'1', name:'Lars Erik', calendar:'lars.erik.finholt@gmail.com'},
-            { id: '2', name: 'Camilla', calendar: 'camilla.finholt@gmail.com' }
-        ]
-    }
+    .constant('Mocks', {
 
-});
+        calendars: [
+            { id: '1', name: 'lars.erik.finholt@gmail.com' }
+        ],
+        calendarItems: [
+            { id: '1', name: 'lars.erik.finholt@gmail.com', title: 'TEST title', start: new Date() }
+        ],
+
+        settings: {
+            users: [
+                { id: '1', name: 'Lars Erik', calendar: 'lars.erik.finholt@gmail.com' },
+                { id: '2', name: 'Camilla', calendar: 'camilla.finholt@gmail.com' }
+            ]
+        }
+
+    });
