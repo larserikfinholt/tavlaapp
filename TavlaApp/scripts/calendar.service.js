@@ -1,9 +1,24 @@
 ﻿angular.module('tavla')
-    .factory('CalendarService', function ($q, Mocks) {
+    .factory('CalendarService', function ($q, TavlaService, Mocks) {
 
         console.log("Creating CalendarService....");
 
         var isDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/);
+
+
+        function fillInUserAndCalendarInfo(items, calendars, settings) {
+
+            console.log("fillInUserAndCalendarInfo", { items: items, calendars: calendars, settings: settings });
+
+            var arr = [];
+            _.each(items, function(item) {
+                // check if calendar is configured
+
+
+            });
+
+
+        }
 
 
         var service = {
@@ -62,7 +77,9 @@
                                 // merge with settings
                                 console.log('Got list of calendars items', d);
 
+
                                 self.items = d;
+                                fillInUserAndCalendarInfo(self.items, self.calendars, TavlaService.saved);
                                 self.isLoaded = true;
                                 dfd.resolve(self.items);
                             }), function (e) {

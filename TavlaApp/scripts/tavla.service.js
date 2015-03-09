@@ -1,10 +1,7 @@
 ﻿angular.module('tavla')
     .factory('TavlaService', function ($q, $http, Azureservice, Mocks) {
 
-        console.log("Creating TavlaService....");
-
         var root = 'https://tavlaapi.azure-mobile.net/';
-
         if (window.tinyHippos != undefined) {
             root = "http://localhost:17588";
         }

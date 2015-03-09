@@ -1,13 +1,21 @@
-﻿<ion-modal-view>
+﻿<ion-view>
     <ion-header-bar>
         <h1 class="title">Login</h1>
     </ion-header-bar>
-    <ion-content>
 
-        <button class="button button-large button-positive" ng-click="vm.login()" type="submit">Log in</button>
-        <span ng-show="vm.result.isLoggedIn">Logged in!</span>
-        <button class="button button-block button-balanced" ng-click="vm.logout()" type="submit">Log off</button>
-        <button class="button button-block button-calm" ng-click="vm.test()" type="submit">Test</button>
-            <pre>{{vm|json}}</pre>
+    <ion-content class="center">
+        <div class="row">
+            <div class="col">
+                <button class="button button-large button-block button-positive" ng-click="vm.login()" type="submit">Log in</button>
+                <span ng-show="vm.result.isLoggedIn">Logged in!</span>
+            </div>
+        </div>
     </ion-content>
-</ion-modal-view>
+
+    <!--<ion-content>
+
+        <button class="button button-large button-block button-positive" ng-click="vm.login()" type="submit">Log in</button>
+        <span ng-show="vm.result.isLoggedIn">Logged in!</span>
+            <pre>{{vm|json}}</pre>
+    </ion-content>-->
+</ion-view>
