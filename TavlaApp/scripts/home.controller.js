@@ -3,6 +3,6 @@
 
         var vm = this;
         vm.calendars = TavlaService.calendars;
-        vm.items = calendarItems;
+        vm.days = calendarItems;
         vm.settings = TavlaService.saved;
     });

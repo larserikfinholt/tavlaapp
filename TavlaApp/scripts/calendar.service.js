@@ -5,26 +5,63 @@
 
         var isDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/);
 
+        function fillInUserAndCalendarInfo(data, days) {
 
-        function fillInUserAndCalendarInfo(items, calendars, settings) {
+            console.log("fillInUserAndCalendarInfo", data);
 
-            console.log("fillInUserAndCalendarInfo", { items: items, calendars: calendars, settings: settings });
 
             var arr = [];
-            _.each(items, function(item) {
-                // check if calendar is configured
+            for (var i = 0; i < days; i++) {
+                arr.push({
+                    date: moment().startOf('day').add(i, 'days'),
+                    items: []
+                });
 
+            }
+            _.each(arr, function (day) {
+                // check if  is configured
+                var correctDay = _.filter(data.calendarItems, function (item) {
+                    return day.date.isSame(item.dtstart, 'day');
+                });
+
+
+                // add username
+                var withUserInfo = correctDay.map(function (d) {
+
+                    // find calendar
+                    d.calendar = _.find(data.calendars, { id: d.calendar_id });
+                    if (!d.calendar) {
+                        console.warn("Fant ikke kalendar for item", d);
+                    }
+
+                    d.user = _.find(data.settings.members, { calendars: d.calendar.name });
+                    if (!d.user) {
+                        console.warn("Fant ikke bruker for kalender item", d);
+                    }
+                    return d;
+                });
+
+                // add to return array
+                _.each(withUserInfo, function (w) {
+                    // only add if userinfo is present
+                    if (w.user) {
+                        day.items.push(w);
+                    }
+                });
 
             });
 
-
+            console.log("Result", arr);
+            return arr;
         }
+
+
 
 
         var service = {
 
             calendars: [],
-            items: [],
+            days: [],
             isLoaded: false,
 
 
@@ -69,19 +106,28 @@
                         var start = new Date();
                         var end = new Date(2015, 6, 1);
                         if (!isDevice) {
-                            self.items = Mocks.calendarItems;
+                            self.days = fillInUserAndCalendarInfo({
+                                calendarItems: Mocks.calendarItems,
+                                calendars: self.calendars,
+                                settings: TavlaService.saved
+                            }, 14);
+
+                                
                             self.isLoaded = true;
-                            dfd.resolve(self.items);
+                            dfd.resolve(self.days);
                         } else {
                             window.plugins.calendar.listEventsInRange(start, end, (function (d) {
                                 // merge with settings
-                                console.log('Got list of calendars items', d);
+                                console.log('Got list of calendars items', JSON.stringify(d));
 
 
-                                self.items = d;
-                                fillInUserAndCalendarInfo(self.items, self.calendars, TavlaService.saved);
+                                self.days = fillInUserAndCalendarInfo( {
+                                    calendarItems: d,
+                                    calendars: self.calendars,
+                                    settings: TavlaService.saved
+                                }, 14);
                                 self.isLoaded = true;
-                                dfd.resolve(self.items);
+                                dfd.resolve(self.days);
                             }), function (e) {
                                 console.warn("Could not get list of cal items", e);
                                 dfd.reject(e);
@@ -99,4 +145,48 @@
         return service;
 
 
+    }).filter('dayRange', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, start, stop) {
+            // Create a new Array
+            var filtered = [];
+            var startDate = moment().startOf('day').add(start, 'days');
+            var stopDate = moment().startOf('day').add(stop, 'days');
+
+            var range = moment().range(startDate, stopDate );
+            // loop through existing Array
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                // check if the individual Array element begins with `a` or not
+                if (range.contains(item.date)) {
+                    // push it into the Array if it does!
+                    filtered.push(item);
+                }
+            }
+            // boom, return the Array after iteration's complete
+            return filtered;
+        };
+    }).filter('upcommingEvents', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, start, stop) {
+            // Create a new Array
+            var filtered = [];
+            var startDate = moment().startOf('day').add(start, 'days');
+            var stopDate = moment().startOf('day').add(stop, 'days');
+
+            var range = moment().range(startDate, stopDate);
+            // loop through existing Array
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                // check if the individual Array element begins with `a` or not
+                if (range.contains(item.date)) {
+                    // push it into the Array if it does!
+                    filtered= filtered.concat(item.items);
+                }
+            }
+            // boom, return the Array after iteration's complete
+            return filtered;
+        };
     });

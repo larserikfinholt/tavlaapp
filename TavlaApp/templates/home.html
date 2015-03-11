@@ -1,12 +1,40 @@
 ﻿<ion-view view-title="Home">
     <ion-content>
-        <h1>Home</h1>
-        <div class="row">
-            <div class="col" ng-repeat="day in vm.dayd">
-
+        <!--<h1>Home</h1>-->
+        <div class="row responsive-sm">
+            <div class="col" ng-repeat="day in vm.days | dayRange:0:2">
+                <div class="list">
+                    <div class="item item-divider">
+                        {{day.date.format('dddd')}}
+                    </div>
+                    <a class="item item-icon-left" href="#" ng-repeat="item in day.items">
+                        <i class="icon tavla-user-icon">{{item.user.name[0]}}</i>
+                        {{item.title}}
+                        <span class="item-note">
+                            {{item.dtstart|date:'HH:mm'}}
+                        </span>
+                    </a>
+                    <!--<div class="item" ng-repeat="item in day.items">
+                        {{item.title}}
+                    </div>-->
+                </div>
+            </div>
+            <div class="col">
+                <div class="list">
+                    <div class="item item-divider">
+                        Upcomming
+                    </div>
+                    <div class="item item-icon-left" ng-repeat="item in vm.days| upcommingEvents:2:10">
+                        <i class="icon tavla-user-icon">{{item.user.name[0]}}</i>
+                        {{item.title}}
+                        <span class="item-note">
+                            {{item.dtstart|date:'EEE dd MMM'}}
+                        </span>
+                    </div>
+                </div>
             </div>
 
         </div>
-        <pre>{{vm|json}}</pre>
-</ion-content>
+        <!--<pre>{{vm|json}}</pre>-->
+    </ion-content>
 </ion-view>

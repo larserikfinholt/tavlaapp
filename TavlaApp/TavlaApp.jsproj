@@ -215,6 +215,9 @@
     <Content Include="scripts\calendar.controller.js" />
     <Content Include="scripts\calendar.service.js" />
     <Content Include="scripts\frameworks\angular-azure-mobile-service.min.js" />
+    <Content Include="scripts\frameworks\lodash.js" />
+    <Content Include="scripts\frameworks\moment-range.js" />
+    <Content Include="scripts\frameworks\moment.js" />
     <Content Include="scripts\home.controller.js" />
     <Content Include="scripts\register.controller.js" />
     <Content Include="scripts\login.controller.js" />
@@ -236,6 +239,8 @@
     <Content Include="merges\windows\scripts\platformOverrides.js" />
     <Content Include="merges\windows\scripts\winstore-jscompat.js" />
     <Content Include="templates\home.html" />
+    <Content Include="tests\test.html" />
+    <Content Include="tests\tests.js" />
     <Folder Include="merges\ios\scripts\" />
     <Folder Include="res\icons\android\" />
     <Folder Include="res\icons\ios\" />
