@@ -10,6 +10,7 @@
 
         var service = {
 
+            updates:0,
             isSettingsLoaded: false,
             saved: null,
 
@@ -50,7 +51,8 @@
 
                 }).done(function (d) {
                     // Azureservice.login('google').then(function () {
-                    console.log("Ferdig logget på!");
+                    self.updates++;
+                    console.log("Ferdig logget på!",self.updates);
                     //Azureservice.query('Todos').then(function (d) {
                     console.log("Logged in", d.result);
                     self.isSettingsLoaded = true;
@@ -125,8 +127,25 @@
                     dfd.resolve(self.saved);
                 }
                 return dfd.promise;
-            }
+            },
 
+            addOrUpdateUser: function (user) {
+                var self = this;
+                var dfd = $q.defer();
+                console.log("Calling add user...");
+                client.invokeApi('User/addOrUpdateUser', {
+                    body: user,
+                    method: "post"
+                }).done(function (d) {
+                    console.log("Added/saved", d.result);
+                    dfd.resolve({ saved: true, result: d });
+                }, function () {
+                    console.warn("Fikk ikke registrert", d);
+                    dfd.resolve({ error: d });
+                });
+
+                return dfd.promise;
+            }
 
         }
 

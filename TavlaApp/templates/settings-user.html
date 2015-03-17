@@ -1,0 +1,30 @@
+﻿<ion-view view-title="Settings">
+    <ion-content>
+        <div class="bar bar-header bar-light">
+            <h1 class="title">{{vm.title}}</h1>
+        </div>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">First Name</span>
+                <input type="text" placeholder="Enter name" ng-model="vm.user.name">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Calendar</span>
+                <input type="text" placeholder="enter gmail calendar" ng-model="vm.user.calendars">
+            </label>
+            <div class="item item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="vm.user.isAdmin">
+                </label>
+                Is administrator
+            </div>
+            <div class="item ">
+                <button class="button button-assertive" ng-click="vm.save()">
+                    Save
+                </button>
+            </div>
+        </div>
+        <pre>{{vm|json}}</pre>
+    </ion-content>
+    
+</ion-view>

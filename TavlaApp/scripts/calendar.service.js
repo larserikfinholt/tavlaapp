@@ -63,6 +63,7 @@
             calendars: [],
             days: [],
             isLoaded: false,
+            allEvents:[],
 
 
             getAllCalendars: function () {
@@ -119,6 +120,7 @@
                             window.plugins.calendar.listEventsInRange(start, end, (function (d) {
                                 // merge with settings
                                 console.log('Got list of calendars items', JSON.stringify(d));
+                                self.allEvents = d;
 
 
                                 self.days = fillInUserAndCalendarInfo( {

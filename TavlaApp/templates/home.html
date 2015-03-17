@@ -15,8 +15,8 @@
                         </span>
                     </a>
                     <!--<div class="item" ng-repeat="item in day.items">
-                        {{item.title}}
-                    </div>-->
+                            {{item.title}}
+                        </div>-->
                 </div>
             </div>
             <div class="col">
@@ -35,6 +35,17 @@
             </div>
 
         </div>
-        <!--<pre>{{vm|json}}</pre>-->
+        <div class="row">
+            <div class="col">
+                <pre>{{vm|json}}</pre>
+            </div>
+        </div>
+       
     </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <button class="button" ng-repeat="user in vm.settings.members">{{user.name}}</button>
+
+        </div>
+    </div>
 </ion-view>

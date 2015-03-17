@@ -1,9 +1,38 @@
 ﻿<ion-view view-title="Settings">
     <ion-content>
-        <ion-list>
-            <ion-item ng-repeat="calendar in calendars">
-                {{calendar.name}}
-            </ion-item>
-        </ion-list>
+        <div ng-repeat="user in vm.settings.members">
+            <div class="list card">
+
+                <div class="item item-avatar">
+                    <!--<img src="mcfly.jpg">-->
+                    <h2>{{user.name}}</h2>
+                    <p>{{user.isAdmin?'Administrator':'Regular user'}}</p>
+                </div>
+
+                <div class="item item-body">
+                    <p>
+                        Some text about this user
+                    </p>
+                    <p>
+                    <p class="subdued">{{user.id?'Has connected to Tavla':'not connected yet'}}</p>
+                    <p class="subdued">{{user.calendars}}</p>
+                    </p>
+                </div>
+
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                    <a class="tab-item" ng-click="vm.edit(user)">
+                        <i class="icon ion-edit"></i>
+                        Edit
+                    </a>
+                    <a class="tab-item" href="#">
+                        <i class="icon ion-trash-a"></i>
+                        Delete
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <button class="button button-outline button-block button-positive" ng-click="vm.edit()">Add new member</button>
     </ion-content>
 </ion-view>

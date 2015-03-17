@@ -1,8 +1,9 @@
 ﻿angular.module('tavla')
-    .controller('HomeController', function (TavlaService, calendarItems) {
+    .controller('HomeController', function (TavlaService, calendarItems, CalendarService) {
 
         var vm = this;
-        vm.calendars = TavlaService.calendars;
+    vm.updates = TavlaService.updates;
         vm.days = calendarItems;
         vm.settings = TavlaService.saved;
+        vm.calendarService = CalendarService;
     });
