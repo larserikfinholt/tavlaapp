@@ -1,9 +1,9 @@
 ﻿<ion-view view-title="Settings">
+    <div class="bar bar-header bar-light">
+        <h1 class="title">{{vm.title}}</h1>
+    </div>
     <ion-content>
-        <div class="bar bar-header bar-light">
-            <h1 class="title">{{vm.title}}</h1>
-        </div>
-        <div class="list">
+        <div class="list list-inset">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">First Name</span>
                 <input type="text" placeholder="Enter name" ng-model="vm.user.name">
@@ -12,6 +12,9 @@
                 <span class="input-label">Calendar</span>
                 <input type="text" placeholder="enter gmail calendar" ng-model="vm.user.calendars">
             </label>
+            <div class="item">
+                {{vm.user.id?'Has connected phone to Tavla':'Has not connected phone to Tavla yet'}}
+            </div>
             <div class="item item-checkbox">
                 <label class="checkbox">
                     <input type="checkbox" ng-model="vm.user.isAdmin">

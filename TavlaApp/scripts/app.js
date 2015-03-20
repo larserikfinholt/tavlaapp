@@ -75,6 +75,9 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
             resolve: {
                 calendarItems: function (CalendarService) {
                     return CalendarService.getItems();
+                },
+                doneIts: function(TavlaService) {
+                    return TavlaService.loadAllDoneIts();
                 }
             }
         })
@@ -101,17 +104,20 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
                 }
             }
         })
-        .state('app.usersettings', {
-            url: "/settings:userIndex",
+        .state('app.settingsuser', {
+            url: "/settingsuser",
             views: {
                 'menuContent': {
                     templateUrl: "templates/settings-user.html",
-                    controller: 'UserSettingsController as vm'
+                    controller: 'UserSettingsController as vm',
                 }
             },
+            params: {
+                user:null
+            },
             resolve: {
-                settings: function (TavlaService) {
-                    return TavlaService.getSettings();
+                user: function ($stateParams) {
+                    return $stateParams.user;
                 }
             }
         });

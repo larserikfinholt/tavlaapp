@@ -13,6 +13,7 @@
             updates:0,
             isSettingsLoaded: false,
             saved: null,
+            doneIts:null,
 
             authenticate: function () {
                 var self = this;
@@ -56,7 +57,7 @@
                     //Azureservice.query('Todos').then(function (d) {
                     console.log("Logged in", d.result);
                     self.isSettingsLoaded = true;
-                    self.saved = d.result;
+                        self.saved = d.result;
                     dfd.resolve(d);
                 }, function (e) {
                     console.warn("Noe gikk feil i pålogging", e);
@@ -145,6 +146,40 @@
                 });
 
                 return dfd.promise;
+            },
+
+            loadAllDoneIts: function() {
+                var self = this;
+                var dfd = $q.defer();
+                if (self.doneIts === null) {
+                    console.log("Calling load doneit...");
+                    var doneItTable = client.getTable('doneIt');
+                    doneItTable.read().then(function (d) {
+                        console.log("Loaded doneits", d);
+                        self.doneIts = d;
+                        dfd.resolve({ saved: true, result: d });
+                    });
+                } else {
+                    dfd.resolve(self.doneIts);
+                }
+
+                return dfd.promise;
+
+            },
+
+            registerDoneIt: function (user, type) {
+                var self = this;
+                var dfd = $q.defer();
+                console.log("Calling add doneit...");
+                var doneItTable = client.getTable('doneIt');
+                doneItTable.insert({ familyMemberId: user.id, type: type }).then(function(d) {
+                    console.log("Added doneit", d);
+                    self.doneIts.push(d);
+                        dfd.resolve({ saved: true, result: d });
+                });
+
+                return dfd.promise;
+                
             }
 
         }

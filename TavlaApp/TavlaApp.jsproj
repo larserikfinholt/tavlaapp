@@ -224,6 +224,7 @@
     <Content Include="scripts\settings-user.controller.js" />
     <Content Include="scripts\settings.controller.js" />
     <Content Include="scripts\tavla.service.js" />
+    <Content Include="templates\popup-user.html" />
     <Content Include="templates\register.join.html" />
     <Content Include="templates\register.newfamily.html" />
     <Content Include="templates\register.html" />

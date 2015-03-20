@@ -1,21 +1,24 @@
 ﻿<ion-view view-title="Settings">
     <ion-content>
-        <div ng-repeat="user in vm.settings.members">
-            <div class="list card">
+        <div >
+            <div class="list list-inset">
+                
+                <a class="item item-icon-left" ng-click="vm.edit(user)" ng-repeat="user in vm.tavlaService.saved.members">
+                    <i class="icon ion-person"></i>
+                    {{user.name}}
+                    <span class="item-note">
+                        {{user.isAdmin?'Administrator':''}}
+                    </span>
+                </a>
 
-                <div class="item item-avatar">
-                    <!--<img src="mcfly.jpg">-->
-                    <h2>{{user.name}}</h2>
-                    <p>{{user.isAdmin?'Administrator':'Regular user'}}</p>
-                </div>
 
-                <div class="item item-body">
+                <!--<div class="item item-body">
                     <p>
                         Some text about this user
                     </p>
                     <p>
-                    <p class="subdued">{{user.id?'Has connected to Tavla':'not connected yet'}}</p>
-                    <p class="subdued">{{user.calendars}}</p>
+                        <p class="subdued">{{user.id?'Has connected to Tavla':'not connected yet'}}</p>
+                        <p class="subdued">{{user.calendars}}</p>
                     </p>
                 </div>
 
@@ -28,7 +31,7 @@
                         <i class="icon ion-trash-a"></i>
                         Delete
                     </a>
-                </div>
+                </div>-->
 
             </div>
         </div>

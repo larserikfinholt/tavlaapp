@@ -37,14 +37,28 @@
         </div>
         <div class="row">
             <div class="col">
-                <pre>{{vm|json}}</pre>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                <div class="list list-inset">
+                    <a class="item item-icon-left" ng-repeat="d in vm.tavlaService.doneIts">
+                        <i class="icon ion-cube"></i>
+                        {{d.name}}
+                        <span class="item-note">
+                            {{d.createdDateTime|date:'MMM'}}
+                        </span>
+                    </a>
+                </div>
             </div>
         </div>
        
     </ion-content>
     <div class="bar bar-footer">
         <div class="button-bar">
-            <button class="button" ng-repeat="user in vm.settings.members">{{user.name}}</button>
+            <button class="button" ng-repeat="user in vm.settings.members" ng-click="vm.showUserDialog(user)">{{user.name}}</button>
 
         </div>
     </div>

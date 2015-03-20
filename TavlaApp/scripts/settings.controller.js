@@ -1,13 +1,13 @@
 ﻿angular.module('tavla')
-    .controller('SettingsController', function ($state, settings) {
+    .controller('SettingsController', function ($state, settings, TavlaService) {
 
         var vm = this;
-        vm.settings = settings;
+
+        vm.tavlaService = TavlaService;
 
         vm.edit=function(user) {
-
-            var index = vm.settings.members.indexOf(user);
-            $state.go("app.usersettings", { userIndex: index });
+            console.log("State", $state);
+            $state.go("app.settingsuser", { user: user });
 
         }
 
@@ -16,4 +16,4 @@
         }
     vm.init();
 
-});
+}); 

@@ -1,9 +1,9 @@
 ﻿angular.module('tavla')
-    .controller('UserSettingsController', function ($stateParams, settings, TavlaService, $state, $window) {
-        console.log("UserSettingsController", settings, $stateParams);
+    .controller('UserSettingsController', function ($stateParams,  TavlaService, $state, user) {
+        console.log("UserSettingsController", $stateParams);
         var vm = this;
 
-        var isEditMode = $stateParams.userIndex != -1;
+        var isEditMode = !!user;
 
         vm.save = function () {
             TavlaService.addOrUpdateUser(vm.user).then(function (d) {
@@ -21,7 +21,7 @@
 
         function init() {
             if (isEditMode) {
-                vm.user = settings.members[$stateParams.userIndex];
+                vm.user = user;
                 vm.title = "Edit user";
 
             } else {
