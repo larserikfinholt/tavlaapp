@@ -1,5 +1,5 @@
 ﻿angular.module('tavla')
-    .controller('HomeController', function (TavlaService, calendarItems, CalendarService, $ionicModal, $scope, doneIts) {
+    .controller('HomeController', function (TavlaService, calendarItems, CalendarService, $ionicModal, $scope,  $interval) {
 
         var vm = this;
 
@@ -10,9 +10,10 @@
         vm.calendarService = CalendarService;
       
 
+
         vm.buster = function () {
             $scope.modal.hide();
-            TavlaService.registerDoneIt(vm.user, 1);
+            TavlaService.registerDoneIt(vm.user, 1).then(function (d) { TavlaService.doneIts.push(d); });
             console.log("Buster", vm.user);
         };
 
@@ -25,6 +26,11 @@
         $ionicModal.fromTemplateUrl('templates/popup-user.html', {
             scope: $scope
         }).then(function (modal) {
-            $scope.modal = modal;
+            $scope.modal = modal; 
         });
-    });
+
+
+    $interval(function() {
+        console.log("interval");
+    }, 30*60*1000);
+});

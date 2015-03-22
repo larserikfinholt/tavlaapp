@@ -8,9 +8,9 @@
                 <span class="input-label">First Name</span>
                 <input type="text" placeholder="Enter name" ng-model="vm.user.name">
             </label>
-            <label class="item item-input item-stacked-label">
+            <label class="item item-select item-stacked-label">
                 <span class="input-label">Calendar</span>
-                <input type="text" placeholder="enter gmail calendar" ng-model="vm.user.calendars">
+                <select ng-model="vm.user.calendars" ng-options="c.name for c in vm.calendars"></select>
             </label>
             <div class="item">
                 {{vm.user.id?'Has connected phone to Tavla':'Has not connected phone to Tavla yet'}}

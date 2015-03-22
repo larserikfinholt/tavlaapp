@@ -37,24 +37,23 @@
         </div>
         <div class="row">
             <div class="col">
+                <pre>{{vm.tavlaService.doneIts|json}}</pre>
             </div>
             <div class="col">
             </div>
             <div class="col">
-            </div>
-            <div class="col">
+                <button class="button button-energized button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:-2).length>0 ">Buster må på tur!</button>
                 <div class="list list-inset">
-                    <a class="item item-icon-left" ng-repeat="d in vm.tavlaService.doneIts">
-                        <i class="icon ion-cube"></i>
-                        {{d.name}}
+                    <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
+                        {{d.user}}
                         <span class="item-note">
-                            {{d.createdDateTime|date:'MMM'}}
+                            {{d.dateTime|date:'HH:mm'}}
                         </span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
-       
+
     </ion-content>
     <div class="bar bar-footer">
         <div class="button-bar">

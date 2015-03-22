@@ -174,8 +174,8 @@
                 var doneItTable = client.getTable('doneIt');
                 doneItTable.insert({ familyMemberId: user.id, type: type }).then(function(d) {
                     console.log("Added doneit", d);
-                    self.doneIts.push(d);
-                        dfd.resolve({ saved: true, result: d });
+                    //self.doneIts.push(d);
+                    dfd.resolve(d);
                 });
 
                 return dfd.promise;
@@ -187,4 +187,41 @@
         return service;
 
 
+    }).filter('todaysOfType', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, type, stop) {
+            // Create a new Array
+            console.log("filter...");
+            var filtered = [];
+            // loop through existing Array
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                // check if the individual Array element begins with `a` or not
+                if (item.type===type && moment(item.dateTime).isSame(moment(),'day')) {
+                    // push it into the Array if it does!
+                    filtered.push(item);
+                }
+            }
+            // boom, return the Array after iteration's complete
+            return filtered;
+        };
+    }).filter('hoursOld', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, hours, stop) {
+            // Create a new Array
+            var filtered = [];
+            // loop through existing Array
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                // check if the individual Array element begins with `a` or not
+                if (moment(item.dateTime).add(hours, 'hours').isAfter()) {
+                    // push it into the Array if it does!
+                    filtered.push(item);
+                }
+            }
+            // boom, return the Array after iteration's complete
+            return filtered;
+        };
     });

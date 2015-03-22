@@ -1,9 +1,11 @@
 ﻿angular.module('tavla')
-    .controller('UserSettingsController', function ($stateParams,  TavlaService, $state, user) {
+    .controller('UserSettingsController', function ($stateParams,  TavlaService, CalendarService, $state, user) {
         console.log("UserSettingsController", $stateParams);
         var vm = this;
 
         var isEditMode = !!user;
+
+    vm.calendars = CalendarService.calendars;
 
         vm.save = function () {
             TavlaService.addOrUpdateUser(vm.user).then(function (d) {
