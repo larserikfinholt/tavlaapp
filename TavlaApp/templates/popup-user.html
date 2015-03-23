@@ -1,9 +1,16 @@
 ﻿<ion-modal-view >
-    <ion-header-bar class="bar bar-header bar-clear">
+    <ion-header-bar class="bar bar-header bar-balanced">
         <h1 class="title">Så bra, hva har du gjort?</h1>
-        <button class="button button-clear button-balanced" ng-click="modal.hide()">Cancel</button>
+        <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
     </ion-header-bar>
     <ion-content class="" >
-        <button class="button button-positive button-full" ng-click="vm.buster()">Tur med Buster</button>
+        <div class="list list-inset">
+            <div class="list-item">
+                <button class="button button-positive button-large" ng-click="vm.buster()">Tur med Buster</button>
+                
+            </div>            
+        </div>
+        <button class="button button-clear button-block" ng-click="modal.hide()">Hakke gått enda, men skal snart!</button>
+
     </ion-content>
 </ion-modal-view>

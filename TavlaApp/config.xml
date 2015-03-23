@@ -12,5 +12,6 @@
   <vs:plugin name="com.msopentech.azure-mobile-services" version="0.1.4" />
   <vs:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
   <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.0" />
+  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:platformSpecificValues />
 </widget>

@@ -157,6 +157,15 @@
     <Content Include="plugins\nl.x-services.plugins.calendar\src\ios\Calendar.m" />
     <Content Include="plugins\nl.x-services.plugins.calendar\test\tests.js" />
     <Content Include="plugins\nl.x-services.plugins.calendar\www\Calendar.js" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\.fetch.json" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\plugin.xml" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\README.md" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\android\nl\xservices\plugins\Insomnia.java" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\firefoxos\insomnia.js" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\ios\Insomnia.h" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\ios\Insomnia.m" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\wp8\Insomnia.cs" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\www\Insomnia.js" />
     <Content Include="plugins\org.apache.cordova.inappbrowser\.fetch.json" />
     <Content Include="plugins\org.apache.cordova.inappbrowser\CONTRIBUTING.md" />
     <Content Include="plugins\org.apache.cordova.inappbrowser\doc\de\index.md" />
@@ -224,6 +233,7 @@
     <Content Include="scripts\settings-user.controller.js" />
     <Content Include="scripts\settings.controller.js" />
     <Content Include="scripts\tavla.service.js" />
+    <Content Include="templates\popup-alerts.html" />
     <Content Include="templates\popup-user.html" />
     <Content Include="templates\register.join.html" />
     <Content Include="templates\register.newfamily.html" />

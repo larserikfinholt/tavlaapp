@@ -10,7 +10,7 @@
             </label>
             <label class="item item-select item-stacked-label">
                 <span class="input-label">Calendar</span>
-                <select ng-model="vm.user.calendars" ng-options="c.name for c in vm.calendars"></select>
+                <select ng-model="vm.user.calendars" ng-options="c.name as c.name for c in vm.calendars"></select>
             </label>
             <div class="item">
                 {{vm.user.id?'Has connected phone to Tavla':'Has not connected phone to Tavla yet'}}

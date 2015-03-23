@@ -11,15 +11,20 @@
       
 
 
-        vm.buster = function () {
+        vm.buster = function (u) {
             $scope.modal.hide();
-            TavlaService.registerDoneIt(vm.user, 1).then(function (d) { TavlaService.doneIts.push(d); });
-            console.log("Buster", vm.user);
+            $scope.modalAlert.hide();
+            var user = u||vm.user;
+            TavlaService.registerDoneIt(user, 1).then(function (d) { TavlaService.doneIts.push(d); });
+            console.log("Buster", user);
         };
 
         vm.showUserDialog = function (user) {
             vm.user = user;
             $scope.modal.show();
+        }
+        vm.alertClick=function(type) {
+            $scope.modalAlert.show();
         }
 
 
@@ -28,9 +33,14 @@
         }).then(function (modal) {
             $scope.modal = modal; 
         });
-
+        $ionicModal.fromTemplateUrl('templates/popup-alerts.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modalAlert = modal;
+        });
 
     $interval(function() {
-        console.log("interval");
+        console.log("reload calndars");
+        CalendarService.reload();
     }, 30*60*1000);
 });

@@ -20,11 +20,11 @@
                 </div>
             </div>
             <div class="col">
-                <div class="list">
+                <div class="list" style="max-height: 400px;">
                     <div class="item item-divider">
                         Upcomming
                     </div>
-                    <div class="item item-icon-left" ng-repeat="item in vm.days| upcommingEvents:2:10">
+                    <div class="item item-icon-left" ng-repeat="item in vm.days| upcommingEvents:3:30">
                         <i class="icon tavla-user-icon">{{item.user.name[0]}}</i>
                         {{item.title}}
                         <span class="item-note">
@@ -37,24 +37,35 @@
         </div>
         <div class="row">
             <div class="col">
-                <pre>{{vm.tavlaService.doneIts|json}}</pre>
-            </div>
-            <div class="col">
-            </div>
-            <div class="col">
-                <button class="button button-energized button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:-2).length>0 ">Buster må på tur!</button>
-                <div class="list list-inset">
-                    <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
-                        {{d.user}}
-                        <span class="item-note">
-                            {{d.dateTime|date:'HH:mm'}}
-                        </span>
+                <div class="list">
+                    <div class="item item-divider_">
+                        Buster
+                    </div>
+                    <div class="item">
+                        <button class="button button-assertive button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:1).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
+                        <div class="list list-inset">
+                            <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
+                                {{d.user}}
+                                <span class="item-note">
+                                    {{d.dateTime|date:'HH:mm'}}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                <!--<pre>{{vm.tavlaService.doneIts|json}}</pre>-->
+            </div>
+            <div class="col">
+            </div>
+
         </div>
 
     </ion-content>
+
     <div class="bar bar-footer">
         <div class="button-bar">
             <button class="button" ng-repeat="user in vm.settings.members" ng-click="vm.showUserDialog(user)">{{user.name}}</button>

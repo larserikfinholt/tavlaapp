@@ -20,8 +20,11 @@
                 var dfd = $q.defer();
 
                 if (window.tinyHippos != undefined) {
+
                     dfd.resolve('ripple');
                 } else {
+                    console.log("prevent sleep...");
+                    window.plugins.insomnia.keepAwake();
                     console.log("Calling authenticate...");
                     client.login('google').done(function (d) {
                         // Azureservice.login('google').then(function () {
@@ -192,7 +195,6 @@
         // Angular passes in the `items` which is our Array
         return function (items, type, stop) {
             // Create a new Array
-            console.log("filter...");
             var filtered = [];
             // loop through existing Array
             for (var i = 0; i < items.length; i++) {

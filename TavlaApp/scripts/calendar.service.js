@@ -111,7 +111,7 @@
                                 calendarItems: Mocks.calendarItems,
                                 calendars: self.calendars,
                                 settings: TavlaService.saved
-                            }, 14);
+                            }, 30);
 
                                 
                             self.isLoaded = true;
@@ -127,7 +127,7 @@
                                     calendarItems: d,
                                     calendars: self.calendars,
                                     settings: TavlaService.saved
-                                }, 14);
+                                }, 30);
                                 self.isLoaded = true;
                                 dfd.resolve(self.days);
                             }), function (e) {
@@ -140,6 +140,12 @@
                 }
                 return dfd.promise;
 
+            },
+
+            reload: function() {
+                var self = this;
+                self.isLoaded = false;
+                self.getItems();
             },
 
         }
