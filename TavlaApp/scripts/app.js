@@ -104,6 +104,20 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
                 }
             }
         })
+          .state('app.regular', {
+              url: "/regular",
+              views: {
+                  'menuContent': {
+                      templateUrl: "templates/regular.html",
+                      controller: 'RegularController as vm'
+                  }
+              },
+              resolve: {
+                  settings: function (TavlaService) {
+                      return TavlaService.getSettings();
+                  }
+              }
+          })
         .state('app.settingsuser', {
             url: "/settingsuser",
             views: {

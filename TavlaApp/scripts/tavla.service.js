@@ -158,15 +158,33 @@
                     console.log("Calling load doneit...");
                     var doneItTable = client.getTable('doneIt');
                     doneItTable.read().then(function (d) {
-                        console.log("Loaded doneits", d);
-                        self.doneIts = d;
-                        dfd.resolve({ saved: true, result: d });
+                        console.log("Loaded doneits, but waiting on TavlaSettings", d);
+
+                        var settingsTable = client.getTable('TavlaSetting');
+                        settingsTable.read().then(function(ts) {
+                            self.saveTavlaSetting(ts);
+                            console.log("Loaded TavlsSettings also", { tavlaSettings: ts, doneIt: d });
+                            self.doneIts = d;
+                            dfd.resolve({ saved: true, result: d });
+                        });
                     });
                 } else {
                     dfd.resolve(self.doneIts);
                 }
 
                 return dfd.promise;
+
+            },
+
+            saveTavlaSetting: function(ts) {
+
+                self.tavlaSetting = {
+                    regularEvents: {
+                        id: ts[0].id,
+                        data: ts[0].jsonStringifiedData?JSON.parse(ts[0].jsonStringifiedData):null
+                    }
+                };
+                console.log("Got TavlaSettings", self.tavlaSetting);
 
             },
 
@@ -214,6 +232,7 @@
         return function (items, hours, stop) {
             // Create a new Array
             var filtered = [];
+            console.log("kjører...........");
             // loop through existing Array
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];

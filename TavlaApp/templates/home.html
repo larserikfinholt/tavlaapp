@@ -8,7 +8,7 @@
                         {{day.date.format('dddd')}}
                     </div>
                     <a class="item item-icon-left" href="#" ng-repeat="item in day.items">
-                        <i class="icon tavla-user-icon">{{item.user.name[0]}}</i>
+                        <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
                         {{item.title}}
                         <span class="item-note">
                             {{item.dtstart|date:'HH:mm'}}
@@ -25,7 +25,7 @@
                         Upcomming
                     </div>
                     <div class="item item-icon-left" ng-repeat="item in vm.days| upcommingEvents:3:30">
-                        <i class="icon tavla-user-icon">{{item.user.name[0]}}</i>
+                        <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
                         {{item.title}}
                         <span class="item-note">
                             {{item.dtstart|date:'EEE dd MMM'}}
@@ -42,7 +42,7 @@
                         Buster
                     </div>
                     <div class="item">
-                        <button class="button button-assertive button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:1).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
+                        <button class="button button-assertive button-full" ng-hide="::(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:4).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
                         <div class="list list-inset">
                             <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
                                 {{d.user}}
