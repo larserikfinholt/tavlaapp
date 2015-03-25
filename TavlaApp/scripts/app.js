@@ -7,6 +7,9 @@
 angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
 
 .run(function ($ionicPlatform) {
+
+        moment.locale('nb-no');
+
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -73,7 +76,7 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
                 }
             },
             resolve: {
-                calendarItems: function (CalendarService) {
+                calendarItems: function (CalendarService, doneIts) {
                     return CalendarService.getItems();
                 },
                 doneIts: function(TavlaService) {

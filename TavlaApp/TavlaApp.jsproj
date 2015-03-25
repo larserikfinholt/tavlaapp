@@ -225,6 +225,7 @@
     <Content Include="scripts\calendar.service.js" />
     <Content Include="scripts\frameworks\angular-azure-mobile-service.min.js" />
     <Content Include="scripts\frameworks\lodash.js" />
+    <Content Include="scripts\frameworks\moment-no.js" />
     <Content Include="scripts\frameworks\moment-range.js" />
     <Content Include="scripts\frameworks\moment.js" />
     <Content Include="scripts\home.controller.js" />
@@ -234,6 +235,7 @@
     <Content Include="scripts\regular.controller.js" />
     <Content Include="scripts\settings.controller.js" />
     <Content Include="scripts\tavla.service.js" />
+    <Content Include="templates\popup-regular.html" />
     <Content Include="templates\popup-alerts.html" />
     <Content Include="templates\popup-user.html" />
     <Content Include="templates\register.join.html" />

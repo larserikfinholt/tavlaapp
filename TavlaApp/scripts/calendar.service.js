@@ -10,14 +10,39 @@
             console.log("fillInUserAndCalendarInfo", data);
 
 
+            // empty array with days ready to be filled out
             var arr = [];
             for (var i = 0; i < days; i++) {
                 arr.push({
                     date: moment().startOf('day').add(i, 'days'),
                     items: []
                 });
-
             }
+
+            // Get regular Events
+            var nextDays = [];
+            nextDays.push(moment().day());
+            nextDays.push(moment().add(1, 'day').day());
+            nextDays.push(moment().add(2, 'day').day());
+
+            if (TavlaService.tavlaSetting.regularEvents) {
+                for (var k = 0; k < nextDays.length; k++) {
+                    var events = TavlaService.tavlaSetting.regularEvents.data[nextDays[k]].events;
+                    for (var j = 0; j < events.length; j++) {
+                        arr[k].items.push( {
+                                title: events[j].title,
+                                user: events[j].user,
+                                dtstart: moment().startOf('day').add(k, 'days').add(events[j].hour, 'hours').add(events[j].minutes, 'minutes')
+                            }
+                        );
+                    }
+                }
+            } else {
+                console.log("No regularEvents", TavlaService.tavlaSetting);
+            }
+
+
+
             _.each(arr, function (day) {
                 // check if  is configured
                 var correctDay = _.filter(data.calendarItems, function (item) {
@@ -51,7 +76,7 @@
 
             });
 
-            console.log("Result", arr);
+            console.log("Result", { fromCalendar: arr });
             return arr;
         }
 

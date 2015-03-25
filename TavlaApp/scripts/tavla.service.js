@@ -8,12 +8,14 @@
         var client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
 
 
+
         var service = {
 
             updates:0,
             isSettingsLoaded: false,
             saved: null,
-            doneIts:null,
+            doneIts: null,
+            tavlaSetting: {},
 
             authenticate: function () {
                 var self = this;
@@ -162,8 +164,8 @@
 
                         var settingsTable = client.getTable('TavlaSetting');
                         settingsTable.read().then(function(ts) {
-                            self.saveTavlaSetting(ts);
-                            console.log("Loaded TavlsSettings also", { tavlaSettings: ts, doneIt: d });
+                            self.parseTavlaSetting(ts);
+                            console.log("Loaded TavlsSettings also", self);
                             self.doneIts = d;
                             dfd.resolve({ saved: true, result: d });
                         });
@@ -176,15 +178,38 @@
 
             },
 
-            saveTavlaSetting: function(ts) {
+            parseTavlaSetting: function (ts) {
+                var self = this;
 
-                self.tavlaSetting = {
-                    regularEvents: {
+                console.log("parsing", ts);
+                //var t = ts[0].type;
+                self.tavlaSetting= {
+                    regularEvents : {
                         id: ts[0].id,
-                        data: ts[0].jsonStringifiedData?JSON.parse(ts[0].jsonStringifiedData):null
+                        data: ts[0].jsonStringifiedData ? JSON.parse(ts[0].jsonStringifiedData) : null
                     }
                 };
                 console.log("Got TavlaSettings", self.tavlaSetting);
+
+            },
+
+            saveSettingWithName: function (name) {
+                var self = this;
+                var dfd = $q.defer();
+
+                var s = self.tavlaSetting.regularEvents;
+                var toSave = {
+                    id: s.id,
+                    Type: 'regularEvents',
+                    JsonStringifiedData: JSON.stringify(s.data)
+                };
+
+                var settingTable = client.getTable('TavlaSetting');
+                settingTable.update(toSave).then(function(d) {
+                    console.log("Saved setting", toSave, d);
+                    dfd.resolve(d);
+                });
+                return dfd.promise;
 
             },
 
@@ -201,7 +226,8 @@
 
                 return dfd.promise;
                 
-            }
+            },
+
 
         }
 
