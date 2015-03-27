@@ -8,7 +8,7 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
 
 .run(function ($ionicPlatform) {
 
-        moment.locale('nb-no');
+        //moment.locale('nb-no');
 
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -1,3 +1,17 @@
 ﻿.tavla-user-icon {
     color: silver;
 }
+
+.weather {
+    display: inline;
+    float: right;
+}
+.weather img {
+    margin-bottom: 10px;
+}
+.weather span {
+   top: -5px;
+
+  position: relative;
+    color: silver;
+}

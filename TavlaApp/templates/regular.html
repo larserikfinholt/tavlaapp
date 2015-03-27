@@ -2,7 +2,7 @@
     <ion-content>
         <div class="card list" ng-repeat="day in vm.tavlaService.tavlaSetting.regularEvents.data">
             <div class="item item-divider">
-                {{day.dayNo}}
+                {{vm.weekdays[day.dayNo]}}
             </div>
             <div class="item" ng-repeat="event in day.events" ng-click="vm.edit(event)">
                 <i class="icon tavla-user-icon">{{event.user.name[0]}}</i>

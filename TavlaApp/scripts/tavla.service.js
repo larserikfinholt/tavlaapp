@@ -11,11 +11,12 @@
 
         var service = {
 
-            updates:0,
+            updates: 0,
             isSettingsLoaded: false,
             saved: null,
             doneIts: null,
             tavlaSetting: {},
+            weather: [],
 
             authenticate: function () {
                 var self = this;
@@ -58,11 +59,11 @@
                 }).done(function (d) {
                     // Azureservice.login('google').then(function () {
                     self.updates++;
-                    console.log("Ferdig logget på!",self.updates);
+                    console.log("Ferdig logget på!", self.updates);
                     //Azureservice.query('Todos').then(function (d) {
                     console.log("Logged in", d.result);
                     self.isSettingsLoaded = true;
-                        self.saved = d.result;
+                    self.saved = d.result;
                     dfd.resolve(d);
                 }, function (e) {
                     console.warn("Noe gikk feil i pålogging", e);
@@ -153,7 +154,7 @@
                 return dfd.promise;
             },
 
-            loadAllDoneIts: function() {
+            loadAllDoneIts: function () {
                 var self = this;
                 var dfd = $q.defer();
                 if (self.doneIts === null) {
@@ -163,7 +164,7 @@
                         console.log("Loaded doneits, but waiting on TavlaSettings", d);
 
                         var settingsTable = client.getTable('TavlaSetting');
-                        settingsTable.read().then(function(ts) {
+                        settingsTable.read().then(function (ts) {
                             self.parseTavlaSetting(ts);
                             console.log("Loaded TavlsSettings also", self);
                             self.doneIts = d;
@@ -183,10 +184,16 @@
 
                 console.log("parsing", ts);
                 //var t = ts[0].type;
-                self.tavlaSetting= {
-                    regularEvents : {
+                self.tavlaSetting = {
+                    regularEvents: {
                         id: ts[0].id,
                         data: ts[0].jsonStringifiedData ? JSON.parse(ts[0].jsonStringifiedData) : null
+                    },
+                    diverse: {
+                        id: ts[1].id,
+                        data: ts[1].jsonStringifiedData ? JSON.parse(ts[1].jsonStringifiedData) : {
+                            yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml'
+                        }
                     }
                 };
                 console.log("Got TavlaSettings", self.tavlaSetting);
@@ -196,19 +203,41 @@
             saveSettingWithName: function (name) {
                 var self = this;
                 var dfd = $q.defer();
-
-                var s = self.tavlaSetting.regularEvents;
-                var toSave = {
-                    id: s.id,
-                    Type: 'regularEvents',
-                    JsonStringifiedData: JSON.stringify(s.data)
-                };
-
                 var settingTable = client.getTable('TavlaSetting');
-                settingTable.update(toSave).then(function(d) {
-                    console.log("Saved setting", toSave, d);
-                    dfd.resolve(d);
-                });
+
+                switch (name) {
+                    case 'regularEvents':
+                        var s = self.tavlaSetting.regularEvents;
+                        var toSave = {
+                            id: s.id,
+                            Type: 'regularEvents',
+                            JsonStringifiedData: JSON.stringify(s.data)
+                        };
+
+                        settingTable.update(toSave).then(function (d) {
+                            console.log("Saved setting", toSave, d);
+                            dfd.resolve(d);
+                        });
+                        break;
+                    case 'diverse':
+                        var div = self.tavlaSetting.diverse;
+                        var toSaveDiv = {
+                            id: div.id,
+                            Type: 'diverse',
+                            JsonStringifiedData: JSON.stringify(div.data)
+                        };
+
+                        settingTable.update(toSaveDiv).then(function (d) {
+                            console.log("Saved setting", toSave, d);
+                            dfd.resolve(d);
+                        });
+                        break;
+
+
+                    default:
+                        console.warn("Cannot saveSettingWithName", name);
+                }
+
                 return dfd.promise;
 
             },
@@ -218,17 +247,74 @@
                 var dfd = $q.defer();
                 console.log("Calling add doneit...");
                 var doneItTable = client.getTable('doneIt');
-                doneItTable.insert({ familyMemberId: user.id, type: type }).then(function(d) {
+                doneItTable.insert({ familyMemberId: user.id, type: type }).then(function (d) {
                     console.log("Added doneit", d);
                     //self.doneIts.push(d);
                     dfd.resolve(d);
                 });
 
                 return dfd.promise;
-                
+
             },
 
+            refresh: function () {
+                var self = this;
+                var dfd = $q.defer();
+                console.log("Doing a TavlaService refresh....");
+                self.isSettingsLoaded = true;
+                self.login().then(function () {
+                    self.doneIts = null;
+                    self.loadAllDoneIts().then(function () {
 
+                        dfd.resolve();
+                        self.getWeatherForecast();
+
+                    });
+                });
+                return dfd.promise;
+
+            },
+
+            getWeatherForecast: function () {
+                var self = this;
+                var path = self.tavlaSetting.diverse.data.yrPath;
+                console.log("Loading weather for", path);
+                var dfd = $q.defer();
+                client.invokeApi('weather', {
+                    body: null,
+                    method: "get",
+                    parameters: {
+                        yrPath: path
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                }).done(function (d) {
+
+                    console.log("Got weather", d.result);
+                    var formatStr = 'D/M ddd HH:MM';
+
+                    var dayNo = 0;
+                    var days = [];
+                    for (var i = 0; i < d.result.length; i++) {
+                        var toFind = moment().startOf('day').add(12, 'hour').add(dayNo, 'days');
+                        var current = moment(d.result[i].dateFrom, "YYYY-MM-DD HH:mm");
+                        //console.log('looking for ' + toFind.format(formatStr) + " --- current: " + current.format(formatStr));
+                        if (current.isAfter(toFind)) {
+                            days.push(d.result[i]);
+                            //console.log("found:", moment(d.result[i].dateFrom, "YYYY-MM-DD HH:mm").format(formatStr));
+                            dayNo++;
+                        }
+                    }
+
+                    self.weather = days;
+                    console.log("FINAL VM -------------", self);
+                    dfd.resolve(d);
+                });
+                return dfd.promise;
+
+            }
         }
 
         return service;
@@ -244,7 +330,7 @@
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 // check if the individual Array element begins with `a` or not
-                if (item.type===type && moment(item.dateTime).isSame(moment(),'day')) {
+                if (item.type === type && moment(item.dateTime).isSame(moment(), 'day')) {
                     // push it into the Array if it does!
                     filtered.push(item);
                 }
@@ -271,4 +357,13 @@
             // boom, return the Array after iteration's complete
             return filtered;
         };
+    }).directive('tavlaWeather', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                model: '='
+            },
+            template: '<div class="weather"><span>{{model.temperature}}</span><img ng-src="http://symbol.yr.no/grafikk/sym/b38/{{model.symbolNumber}}.png" alt="symbol"></div>'
+        };
+
     });

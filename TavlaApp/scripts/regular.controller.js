@@ -4,6 +4,7 @@
         var vm = this;
 
         vm.tavlaService = TavlaService;
+    vm.weekdays = moment.weekdays();
 
         vm.edit = function (user) {
             console.log("State", $state);
@@ -13,6 +14,7 @@
 
         vm.init = function () {
             console.log("Starting regularcontroller", settings);
+
             if (TavlaService.tavlaSetting.regularEvents.data && TavlaService.tavlaSetting.regularEvents.data.length == 7) {
                 console.log("got regular data before");
             }

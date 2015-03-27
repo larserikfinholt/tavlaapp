@@ -25,14 +25,16 @@
             nextDays.push(moment().add(1, 'day').day());
             nextDays.push(moment().add(2, 'day').day());
 
-            if (TavlaService.tavlaSetting.regularEvents) {
+            console.log("About to add regularEvents", { regularEvents: TavlaService.tavlaSetting.regularEvents, nextDays: nextDays });
+
+            if (TavlaService.tavlaSetting.regularEvents && TavlaService.tavlaSetting.regularEvents.data ) {
                 for (var k = 0; k < nextDays.length; k++) {
                     var events = TavlaService.tavlaSetting.regularEvents.data[nextDays[k]].events;
                     for (var j = 0; j < events.length; j++) {
                         arr[k].items.push( {
                                 title: events[j].title,
                                 user: events[j].user,
-                                dtstart: moment().startOf('day').add(k, 'days').add(events[j].hour, 'hours').add(events[j].minutes, 'minutes')
+                                dtstart: moment().startOf('day').add(k, 'days').add(events[j].hour, 'hours').add(events[j].minutes, 'minutes').toDate()
                             }
                         );
                     }
@@ -167,10 +169,16 @@
 
             },
 
-            reload: function() {
+            refresh: function () {
                 var self = this;
+                var dfd = $q.defer();
+                console.log("Doing a CalendarService refresh....");
                 self.isLoaded = false;
-                self.getItems();
+                self.getItems().then(function () {
+                        dfd.resolve();
+                });
+                return dfd.promise;
+
             },
 
         }

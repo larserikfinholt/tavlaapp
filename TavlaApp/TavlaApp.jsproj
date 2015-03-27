@@ -325,6 +325,9 @@
     <Content Include="res\screens\windows\SplashScreen.scale-240.png" />
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
   <PropertyGroup>
     <TypeScriptToolsVersion>1.1</TypeScriptToolsVersion>
     <DefaultReferenceGroup>Implicit (Multi-Device Apps)</DefaultReferenceGroup>

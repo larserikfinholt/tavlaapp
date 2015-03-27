@@ -1,11 +1,18 @@
 ﻿<ion-view view-title="Home">
     <ion-content>
-        <!--<h1>Home</h1>-->
+        <ion-refresher pulling-text="Pull to refresh..."
+                       on-refresh="vm.refresh()">
+        </ion-refresher>
         <div class="row responsive-sm">
             <div class="col" ng-repeat="day in vm.days | dayRange:0:2">
                 <div class="list">
                     <div class="item item-divider">
                         {{day.date.format('dddd')}}
+                        <div class="weather"><span class="ng-binding">{{vm.tavlaService.weather[$index].temperature}}C</span><img alt="symbol" ng-src="http://symbol.yr.no/grafikk/sym/b38/{{vm.tavlaService.weather[$index].symbolNumber}}.png"></div>
+
+
+
+                        <!--<tavla-weather model="vm.tavlaService.weather[$index]" class="tavlaWeatherSmall" />-->
                     </div>
                     <a class="item item-icon-left" href="#" ng-repeat="item in day.items">
                         <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
@@ -22,7 +29,7 @@
             <div class="col">
                 <div class="list" style="max-height: 400px;">
                     <div class="item item-divider">
-                        Upcomming
+                        Om noen dager
                     </div>
                     <div class="item item-icon-left" ng-repeat="item in vm.days| upcommingEvents:3:30">
                         <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
@@ -57,15 +64,11 @@
             <div class="col">
             </div>
             <div class="col">
-                <!--<pre>{{vm.tavlaService.doneIts|json}}</pre>-->
             </div>
             <div class="col">
             </div>
-
         </div>
-
     </ion-content>
-
     <div class="bar bar-footer">
         <div class="button-bar">
             <button class="button" ng-repeat="user in vm.settings.members" ng-click="vm.showUserDialog(user)">{{user.name}}</button>
