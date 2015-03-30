@@ -26,6 +26,16 @@
         vm.alertClick = function (type) {
             $scope.modalAlert.show();
         }
+        vm.showShopping=function() {
+            $scope.modalShopping.show();
+        }
+        vm.shoppingListRemoveItem = function (item) {
+            var index = vm.tavlaService.tavlaSetting.diverse.data.shoppingList.indexOf(item);
+            if (index > -1) {
+                vm.tavlaService.tavlaSetting.diverse.data.shoppingList.splice(index, 1);
+            }
+        }
+    vm.shoppingListItemToAdd = 'test';
 
         vm.refresh = function () {
             TavlaService.refresh().then(function () {
@@ -51,7 +61,11 @@
         }).then(function (modal) {
             $scope.modalAlert = modal;
         });
-
+        $ionicModal.fromTemplateUrl('templates/popup-shopping.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modalShopping = modal;
+        });
 
         $interval(function () {
             console.log("reload calndars");

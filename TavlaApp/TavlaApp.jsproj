@@ -235,6 +235,7 @@
     <Content Include="scripts\regular.controller.js" />
     <Content Include="scripts\settings.controller.js" />
     <Content Include="scripts\tavla.service.js" />
+    <Content Include="templates\popup-shopping.html" />
     <Content Include="templates\popup-regular.html" />
     <Content Include="templates\popup-alerts.html" />
     <Content Include="templates\popup-user.html" />

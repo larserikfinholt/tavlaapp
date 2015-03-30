@@ -192,7 +192,8 @@
                     diverse: {
                         id: ts[1].id,
                         data: ts[1].jsonStringifiedData ? JSON.parse(ts[1].jsonStringifiedData) : {
-                            yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml'
+                            yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml',
+                            shoppingList:['melk', 'brød']
                         }
                     }
                 };
