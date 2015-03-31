@@ -1,5 +1,5 @@
 ﻿angular.module('tavla')
-    .controller('HomeController', function (TavlaService, calendarItems, CalendarService, $ionicModal, $scope, $interval) {
+    .controller('HomeController', function (TavlaService, calendarItems, CalendarService, $ionicModal, $scope, $interval, $ionicLoading) {
 
         var vm = this;
 
@@ -26,16 +26,50 @@
         vm.alertClick = function (type) {
             $scope.modalAlert.show();
         }
-        vm.showShopping=function() {
+        vm.showShopping = function () {
             $scope.modalShopping.show();
+        }
+        vm.addShopping = function () {
+            vm.tavlaService.recognizeSpeech().then(function(a) {
+                if (a.item.title && a.item.title != 0) {
+                    vm.addShoppingListItem(a.item.title);
+                } else {
+                    $ionicLoading.show({
+                        template: 'Sorry, could you please repeat...',
+                        duration: 1500
+                    });
+                }
+            });
+        }
+        vm.addShoppingListItem=function(item) {
+            var toAdd = {};
+            toAdd.title = item;
+            console.log("Addding", toAdd);
+            vm.tavlaService.tavlaSetting.diverse.data.shoppingList.push(toAdd);
+            vm.saving = true;
+            vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
+                $ionicLoading.show({
+                    template: 'Added: ' + item,
+                    duration:1500
+                });
+                console.log("Saved", r);
+                vm.saving = false;
+            });
         }
         vm.shoppingListRemoveItem = function (item) {
             var index = vm.tavlaService.tavlaSetting.diverse.data.shoppingList.indexOf(item);
             if (index > -1) {
                 vm.tavlaService.tavlaSetting.diverse.data.shoppingList.splice(index, 1);
+                vm.tavlaService.saveSettingWithName('diverse').then(function(r) {
+                    $ionicLoading.show({
+                        template: 'Updated...',
+                        duration: 1500
+                    });
+                });
             }
         }
-    vm.shoppingListItemToAdd = 'test';
+
+        vm.shoppingListItemToAdd = 'test';
 
         vm.refresh = function () {
             TavlaService.refresh().then(function () {

@@ -1,21 +1,18 @@
 ﻿<ion-modal-view >
     <ion-header-bar class="bar bar-header bar-balanced">
-        <div class="buttons">
-            <button class="button button-icon icon ion-ios-minus-outline"
-                    ng-click="shouldShowDelete = !shouldShowDelete; ">Slett</button>
-        </div>
+       
         <h1 class="title">Hva trenger vi?</h1>
         <button class="button button-clear" ng-click="modalShopping.hide()">Lukk</button>
     </ion-header-bar>
     <ion-content class="">
         
        
-        <ion-list show-delete="shouldShowDelete"
+        <ion-list show-delete="true"
                   can-swipe="true">
-            <ion-item ng-repeat="item in vm.tavlaService.tavlaSetting.diverse.data.shoppingList"
+            <ion-item ng-repeat="item in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index"
                       item="item"
                       class="item-remove-animate">
-                {{item }}
+                {{item.title }}
                 <ion-delete-button class="ion-minus-circled"
                                    ng-click="vm.shoppingListRemoveItem(item)">
                 </ion-delete-button>
@@ -26,16 +23,17 @@
                 </ion-option-button>
                 
             </ion-item>
-            <div class="item item-input">
-                <label class="item-input-wrapper">
-                    <input type="text" placeholder="Hva trengs - snakk nå!" ng-model="vm.shoppingListItemToAdd">
-                </label>
-                <button class="button button-calm">
-                    Legg til
-                </button>
-            </div>
+           
 
         </ion-list>
+        <div class="item item-input">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="skriv inn..." ng-model="jalla">
+            </label>
+            <button class="button button-calm" ng-click="vm.addShoppingListItem(jalla)">
+                Legg til
+            </button>
+        </div>
         <button class="button button-light button-block" ng-click="modalShopping.hide()">Kommer ikke på noe mer nå!</button>
 
     </ion-content>

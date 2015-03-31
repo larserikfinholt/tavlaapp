@@ -193,7 +193,7 @@
                         id: ts[1].id,
                         data: ts[1].jsonStringifiedData ? JSON.parse(ts[1].jsonStringifiedData) : {
                             yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml',
-                            shoppingList:['melk', 'brød']
+                            shoppingList: [{ title: 'melk' }, { title: 'brød' }]
                         }
                     }
                 };
@@ -315,7 +315,57 @@
                 });
                 return dfd.promise;
 
-            }
+            },
+
+
+            recognizeSpeech: function () {
+                var dfd = $q.defer();
+
+                var maxMatches = 1;
+                var promptString = "Snakk nå"; // optional
+                var language = "nb-NO";                     // optional
+                if (window.tinyHippos != undefined) {
+                    dfd.resolve({ item: { title: 'melk' } });
+                } else {
+                    window.plugins.speechrecognizer.startRecognize(function (result) {
+                        console.log("Fikk svar", result);
+                        if (result && result.length === 1) {
+                            dfd.resolve({
+                                item: {
+                                    title: result[0]
+                                }
+                            });
+                        }
+                    }, function (errorMessage) {
+                        console.log("Error message: " + errorMessage);
+                        dfd.resolve({
+                            item: {
+                                title: errorMessage
+
+                            }
+                        });
+
+                    }, maxMatches, promptString, language);
+
+                }
+
+                return dfd.promise;
+            },
+
+            getSupportedLanguages: function () {
+                window.plugins.speechrecognizer.getSupportedLanguages(function (languages) {
+                    // display the json array
+                    console.log("Languages:", languages);
+                }, function (error) {
+                    alert("Could not retrieve the supported languages : " + error);
+                });
+            },
+
+
+
+
+
+
         }
 
         return service;

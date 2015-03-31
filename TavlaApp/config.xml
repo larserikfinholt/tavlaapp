@@ -13,5 +13,6 @@
   <vs:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
   <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.0" />
   <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
+  <vs:plugin name="com.phonegap.plugins.speech" version="1.0.0" />
   <vs:platformSpecificValues />
 </widget>

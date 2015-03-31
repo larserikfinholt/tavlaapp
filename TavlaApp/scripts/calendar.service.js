@@ -110,6 +110,7 @@
                             window.plugins.calendar.listCalendars(function (d) {
                                 console.log('Got list of calendars', d);
                                 self.calendars = d;
+                                //TavlaService.getSupportedLanguages();
                                 dfd.resolve(self.calendars);
                             });
                         }

@@ -145,6 +145,13 @@
     <Content Include="plugins\com.msopentech.azure-mobile-services\www\MobileServices.Web-1.1.3.js" />
     <Content Include="plugins\com.msopentech.azure-mobile-services\www\MobileServices.Web.Ext.js" />
     <Content Include="plugins\com.msopentech.azure-mobile-services\www\windows\MobileServices.js" />
+    <Content Include="plugins\com.phonegap.plugins.speech\.fetch.json" />
+    <Content Include="plugins\com.phonegap.plugins.speech\LanguageDetailsChecker.java" />
+    <Content Include="plugins\com.phonegap.plugins.speech\plugin.xml" />
+    <Content Include="plugins\com.phonegap.plugins.speech\README.md" />
+    <Content Include="plugins\com.phonegap.plugins.speech\screenshots\speaknow.png" />
+    <Content Include="plugins\com.phonegap.plugins.speech\SpeechRecognizer.java" />
+    <Content Include="plugins\com.phonegap.plugins.speech\SpeechRecognizer.js" />
     <Content Include="plugins\nl.x-services.plugins.calendar\.fetch.json" />
     <Content Include="plugins\nl.x-services.plugins.calendar\demo\index.html" />
     <Content Include="plugins\nl.x-services.plugins.calendar\plugin.xml" />
