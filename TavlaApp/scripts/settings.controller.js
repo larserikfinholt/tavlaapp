@@ -10,7 +10,11 @@
             $state.go("app.settingsuser", { user: user });
 
         }
+        vm.editTask = function (task) {
+            console.log("State", $state);
+            $state.go("app.settingstasks", { task: task });
 
+        }
         vm.init=function() {
             console.log("Starting settingscontroller", settings);
         }

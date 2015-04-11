@@ -154,6 +154,8 @@
                 return dfd.promise;
             },
 
+
+
             loadAllDoneIts: function () {
                 var self = this;
                 var dfd = $q.defer();
@@ -178,12 +180,55 @@
                 return dfd.promise;
 
             },
+            getPointsForUser: function (user) {
+                var self = this;
+                // Get last payment
+                var usersDoneIts = _.where(self.doneIts, { user: user.name });
+                var clears = _.where(usersDoneIts, { type: 999 });
+                var startFrom = moment("2015-1-1");
+                if (clears.length > 0) {
+                    // find the newest
+                    var sortedClears = _.sortBy(clears, 'dateTime').reverse();
+                    startFrom = moment(sortedClears[0].dateTime);
+                }
+                // Get doneits for user after clear date
+                var currentDoneits = _.filter(usersDoneIts, function (d) {
+                    return startFrom.isBefore(d.dateTime);
+                });
+
+                console.log("Calculating from", { user: user, allDonits: self.doneIts, usersDoneIts: usersDoneIts, clears: clears, startFrom: startFrom, currentDoneIts: currentDoneits });
+
+                // Sum doneIts points
+                var points = 0;
+                _.each(currentDoneits, function (s) {
+                    // get points for type
+                    var task = _.findWhere(self.tavlaSetting.tasks.data, { taskTypeId: s.type });
+                    if (task) {
+                        points = points + task.points;
+                    } else {
+                        if (s.type === 1) {
+                            points = points + 10;
+                        }
+                        if (s.type != 1) {
+                            console.warn("Unable to find task for doneIt", s);
+                        }
+                    }
+                });
+                return points;
+            },
 
             parseTavlaSetting: function (ts) {
                 var self = this;
 
                 console.log("parsing", ts);
                 //var t = ts[0].type;
+
+                var tasks = _.where(ts, { type: 'task' });
+                _.each(tasks, function (t) {
+                    t.data = t.jsonStringifiedData ? JSON.parse(t.jsonStringifiedData) : null;
+                });
+
+
                 self.tavlaSetting = {
                     regularEvents: {
                         id: ts[0].id,
@@ -195,7 +240,8 @@
                             yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml',
                             shoppingList: [{ title: 'melk' }, { title: 'brød' }]
                         }
-                    }
+                    },
+                    tasks: tasks,
                 };
                 console.log("Got TavlaSettings", self.tavlaSetting);
 
@@ -229,11 +275,10 @@
                         };
 
                         settingTable.update(toSaveDiv).then(function (d) {
-                            console.log("Saved setting", toSave, d);
+                            console.log("Saved setting", toSaveDiv, d);
                             dfd.resolve(d);
                         });
                         break;
-
 
                     default:
                         console.warn("Cannot saveSettingWithName", name);
@@ -241,6 +286,36 @@
 
                 return dfd.promise;
 
+            },
+
+            saveTask: function (task) {
+                var self = this;
+                var dfd = $q.defer();
+                var settingTable = client.getTable('TavlaSetting');
+
+                if (task.type != "task") {
+                    console.warn("Not a real task - cant save", task);
+                    return;
+                }
+                task.JsonStringifiedData = JSON.stringify(task.data);
+
+                if (task.id == null) {
+                    settingTable.insert(task).then(function(d) {
+                        console.log("Created task setting", task, d);
+                        dfd.resolve(d);
+                    }, function (err) {
+                        alert("Error: " + err);
+                    });
+                } else {
+                    settingTable.update(task).then(function (d) {
+                        console.log("Saved task setting", task, d);
+                        dfd.resolve(d);
+                    });
+
+                }
+
+
+                return dfd.promise;
             },
 
             registerDoneIt: function (user, type) {
@@ -376,6 +451,7 @@
         // Angular passes in the `items` which is our Array
         return function (items, type, stop) {
             // Create a new Array
+            //console.log("kjører todaysOfType...........");
             var filtered = [];
             // loop through existing Array
             for (var i = 0; i < items.length; i++) {
@@ -395,7 +471,7 @@
         return function (items, hours, stop) {
             // Create a new Array
             var filtered = [];
-            console.log("kjører...........");
+            //console.log("kjører hoursOld...........");
             // loop through existing Array
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
@@ -408,7 +484,59 @@
             // boom, return the Array after iteration's complete
             return filtered;
         };
-    }).directive('tavlaWeather', function () {
+    }).filter('taskEnabledForUser', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, user, stop) {
+            // Create a new Array
+            var filtered = [];
+            if (user && user.id) {
+                //console.log("kjører taskEnabledForUser...........");
+                // loop through existing Array
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // check if the individual Array element begins with `a` or not
+                    if (item.data.isEnabled) {
+                        var enabledUser = _.findWhere(item.data.users, { enabled: true, id: user.id });
+                        // push it into the Array if it does!
+                        if (enabledUser) {
+                            filtered.push(item);
+                        }
+                    }
+                }
+            }
+            // boom, return the Array after iteration's complete
+            return filtered;
+        };
+    }).filter('latestForUser', function () {
+        // function to invoke by Angular each time
+        // Angular passes in the `items` which is our Array
+        return function (items, user, stop) {
+            // Create a new Array
+            var filtered = [];
+            if (user && user.name) {
+                //console.log("kjører latestForUser...........");
+                // loop through existing Array
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // check if the individual Array element begins with `a` or not
+                    if (moment(item.dateTime).add(7, 'days').isAfter() && item.user == user.name) {
+                        // push it into the Array if it does!
+                        filtered.push(item);
+                    }
+                }
+            }
+            // boom, return the Array after iteration's complete
+            filtered.reverse();
+            return filtered;
+        };
+    })
+
+
+
+
+
+    .directive('tavlaWeather', function () {
         return {
             restrict: 'E',
             scope: {

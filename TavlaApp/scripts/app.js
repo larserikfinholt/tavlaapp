@@ -137,7 +137,24 @@ angular.module('tavla', ['ionic', 'azure-mobile-service.module'])
                     return $stateParams.user;
                 }
             }
+        }).state('app.settingstasks', {
+            url: "/settingstasks",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/settings-tasks.html",
+                    controller: 'TasksSettingsController as vm',
+                }
+            },
+            params: {
+                task:null
+            },
+            resolve: {
+                task: function ($stateParams) {
+                    return $stateParams.task;
+                }
+            }
         });
+
 
     //.state('app.single', {
     //    url: "/playlists/:playlistId",

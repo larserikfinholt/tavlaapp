@@ -1,16 +1,53 @@
-﻿<ion-modal-view >
+﻿<ion-modal-view>
     <ion-header-bar class="bar bar-header bar-balanced">
         <h1 class="title">Så bra, hva har du gjort?</h1>
         <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
     </ion-header-bar>
-    <ion-content class="" >
-        <div class="list list-inset">
-            <div class="list-item">
-                <button class="button button-positive button-large" ng-click="vm.buster()">Tur med Buster</button>
-                
-            </div>            
+    <ion-content class="">
+        <div class="row">
+            <div class="col">
+                <div class="list list-inset">
+                    <div class="list-item">
+                        <button class="button button-positive button-large" ng-click="vm.buster()">Tur med Buster</button>
+
+
+                        <button class="button button-positive button-large" ng-click="vm.taskClick(task)" ng-repeat="task in vm.tavlaService.tavlaSetting.tasks|taskEnabledForUser:vm.user">{{task.data.name}} <small>({{task.data.points}} points)</small></button>
+
+                        <button class="button button-energized button-small" ng-click="vm.taskClick({data:{taskTypeId:999}})">Nullstill poeng</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!--<div class="list list-inset">
+                    <div class="item item-divider">Dine poeng</div>
+                    <div class="list-item"><div class="tavla-points"><span>{{vm.points}}</span></div></div>
+                    <div class="item item-divider">Dine siste aktiviteter</div>
+                    <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | latestForUser:vm.user ">
+                        {{vm.getTaskNameForType(d)}}
+                        <span class="item-note">
+                            {{d.dateTime|date:'EEE dd.MM HH:mm'}}
+                        </span>
+                    </div>
+
+                </div>-->
+                    <div class="tavla-points"><span>{{vm.points}}</span>poeng</div>
+                    <div>Dine siste aktiviteter</div>
+                    <div ng-repeat="d in vm.tavlaService.doneIts | latestForUser:vm.user ">
+                        {{vm.getTaskNameForType(d)}}
+                        <span class="item-note">
+                            {{d.dateTime|date:'EEE dd.MM HH:mm'}}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-        <button class="button button-clear button-block" ng-click="modal.hide()">Hakke gått enda, men skal snart!</button>
+        <div>
+
+            <button class="button button-clear button-block" ng-click="modal.hide()">Hakke gjort noe enda, men skal snart!</button>
+        </div>
 
     </ion-content>
 </ion-modal-view>

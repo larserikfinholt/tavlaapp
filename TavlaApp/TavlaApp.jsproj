@@ -238,6 +238,7 @@
     <Content Include="scripts\home.controller.js" />
     <Content Include="scripts\register.controller.js" />
     <Content Include="scripts\login.controller.js" />
+    <Content Include="scripts\settings-tasks.controller.js" />
     <Content Include="scripts\settings-user.controller.js" />
     <Content Include="scripts\regular.controller.js" />
     <Content Include="scripts\settings.controller.js" />
@@ -250,6 +251,7 @@
     <Content Include="templates\register.newfamily.html" />
     <Content Include="templates\register.html" />
     <Content Include="templates\regular.html" />
+    <Content Include="templates\settings-tasks.html" />
     <Content Include="templates\settings-user.html" />
     <Content Include="templates\settings.html" />
     <Content Include="templates\login.html" />

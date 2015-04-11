@@ -2,7 +2,7 @@
     .controller('HomeController', function (TavlaService, calendarItems, CalendarService, $ionicModal, $scope, $interval, $ionicLoading) {
 
         var vm = this;
-
+        vm.points = 1;
         vm.updates = TavlaService.updates;
         vm.days = calendarItems;
         vm.settings = TavlaService.saved;
@@ -11,16 +11,40 @@
 
 
 
+
         vm.buster = function (u) {
+            vm.user = u || vm.user;
+            console.log("Buster");
+            vm.taskClick({data: { taskTypeId: 1 } });
+        };
+        vm.taskClick = function (task) {
             $scope.modal.hide();
             $scope.modalAlert.hide();
-            var user = u || vm.user;
-            TavlaService.registerDoneIt(user, 1).then(function (d) { TavlaService.doneIts.push(d); });
-            console.log("Buster", user);
+            TavlaService.registerDoneIt(vm.user, task.data.taskTypeId).then(function (d) { TavlaService.doneIts.push(d); });
+            console.log("TaskClick", task, vm.user);
+            vm.user = null;
         };
+        //vm.calculatePoints=function() {
+        //    TavlaService.doneIts
+        //}
+        vm.getTaskNameForType = function (doneIt) {
+            if (doneIt.type === 1) {
+                return "Buster";
+            }
+            if (doneIt.type === 999) {
+                return "Nullstilling";
+            }
+            var t = _.find(vm.tavlaService.tavlaSetting.tasks, function(a){ return a.data.taskTypeId===doneIt.type;  });
+            if (t) {
+                return t.data.name;
+            } else {
+                return "Unknown task";
+            }
+        }
 
         vm.showUserDialog = function (user) {
             vm.user = user;
+            vm.points = TavlaService.getPointsForUser(user);
             $scope.modal.show();
         }
         vm.alertClick = function (type) {
@@ -30,7 +54,7 @@
             $scope.modalShopping.show();
         }
         vm.addShopping = function () {
-            vm.tavlaService.recognizeSpeech().then(function(a) {
+            vm.tavlaService.recognizeSpeech().then(function (a) {
                 if (a.item.title && a.item.title != 0) {
                     vm.addShoppingListItem(a.item.title);
                 } else {
@@ -41,7 +65,7 @@
                 }
             });
         }
-        vm.addShoppingListItem=function(item) {
+        vm.addShoppingListItem = function (item) {
             var toAdd = {};
             toAdd.title = item;
             console.log("Addding", toAdd);
@@ -50,7 +74,7 @@
             vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
                 $ionicLoading.show({
                     template: 'Added: ' + item,
-                    duration:1500
+                    duration: 1500
                 });
                 console.log("Saved", r);
                 vm.saving = false;
@@ -60,7 +84,7 @@
             var index = vm.tavlaService.tavlaSetting.diverse.data.shoppingList.indexOf(item);
             if (index > -1) {
                 vm.tavlaService.tavlaSetting.diverse.data.shoppingList.splice(index, 1);
-                vm.tavlaService.saveSettingWithName('diverse').then(function(r) {
+                vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
                     $ionicLoading.show({
                         template: 'Updated...',
                         duration: 1500
