@@ -17,6 +17,7 @@
             doneIts: null,
             tavlaSetting: {},
             weather: [],
+            errors: [],
 
             authenticate: function () {
                 var self = this;
@@ -26,17 +27,15 @@
 
                     dfd.resolve('ripple');
                 } else {
-                    console.log("prevent sleep...");
+                    console.log("Prevent sleep - starting insomnia...");
                     window.plugins.insomnia.keepAwake();
-                    console.log("Calling authenticate...");
+                    console.log("Calling authenticate with google...");
                     client.login('google').done(function (d) {
                         // Azureservice.login('google').then(function () {
-                        console.log("Ferdig logget på!");
-                        //Azureservice.query('Todos').then(function (d) {
-                        console.log("Logged in", d);
+                        console.log("Google login success",d);
                         dfd.resolve({ isLoggedIn: true, user: d.userId });
                     }, function () {
-                        console.warn("Noe gikk feil i pålogging", d);
+                        console.warn("Noe gikk feil i google pålogging", d);
                         dfd.resolve({ isLoggedIn: false, error: d });
                     });
                 }
@@ -48,7 +47,7 @@
 
                 var self = this;
                 var dfd = $q.defer();
-                console.log("Calling login...");
+                console.log("Calling start...");
                 client.invokeApi('start', {
                     body: null,
                     method: "get",
@@ -59,9 +58,8 @@
                 }).done(function (d) {
                     // Azureservice.login('google').then(function () {
                     self.updates++;
-                    console.log("Ferdig logget på!", self.updates);
+                    console.log("Completed Start call - main setting loaded", d.result, self.updates);
                     //Azureservice.query('Todos').then(function (d) {
-                    console.log("Logged in", d.result);
                     self.isSettingsLoaded = true;
                     self.saved = d.result;
                     dfd.resolve(d);
@@ -160,16 +158,19 @@
                 var self = this;
                 var dfd = $q.defer();
                 if (self.doneIts === null) {
-                    console.log("Calling load doneit...");
+                    console.log("Loading doneIt's...");
                     var doneItTable = client.getTable('doneIt');
                     doneItTable.read().then(function (d) {
-                        console.log("Loaded doneits, but waiting on TavlaSettings", d);
+                        //console.log("Loaded doneits, but waiting on TavlaSettings", d);
 
                         var settingsTable = client.getTable('TavlaSetting');
+                        console.log("Loading settings...");
                         settingsTable.read().then(function (ts) {
                             self.parseTavlaSetting(ts);
-                            console.log("Loaded TavlsSettings also", self);
+                            console.log("Loaded TavlsSettings and DoneIts");
                             self.doneIts = d;
+                            self.refreshAlerts();
+
                             dfd.resolve({ saved: true, result: d });
                         });
                     });
@@ -202,9 +203,9 @@
                 var points = 0;
                 _.each(currentDoneits, function (s) {
                     // get points for type
-                    var task = _.findWhere(self.tavlaSetting.tasks.data, { taskTypeId: s.type });
+                    var task = _.find(self.tavlaSetting.tasks, function (t) { return t.data.taskTypeId === s.type; });
                     if (task) {
-                        points = points + task.points;
+                        points = points + task.data.points;
                     } else {
                         if (s.type === 1) {
                             points = points + 10;
@@ -215,6 +216,70 @@
                     }
                 });
                 return points;
+            },
+
+            refreshAlerts: function () {
+
+                var self = this;
+                _.each(self.saved.members, function (user) {
+
+                    user.alerts = [];
+
+                    // Only tasks where user has an alert set up
+                    var taskWithAlertForUser = _.where(self.tavlaSetting.tasks, function (t) {
+                        if (t.data.warningDays) {
+                            var u = _.find(t.data.users, { id: user.id });
+                            if (u) return true;
+                        }
+                        return false;
+                    });
+                    if (taskWithAlertForUser.length > 0) {
+                        // Only users doneit
+                        var usersDoneIts = _.where(self.doneIts, { user: user.name });
+
+                        _.each(taskWithAlertForUser, function (t) {
+                            // Assume sorted list
+                            var last = _.findLast(usersDoneIts, { type: t.data.taskTypeId });
+                            if (last && t.data.warningDays && t.data.warningDays>0) {
+
+                                var maxDate = moment(last.dateTime).add(t.data.warningDays, 'days');
+                                //console.log('compare', { task:t, max: maxDate.format("dddd, DD.MM HH:mm"), last:moment(last.dateTime).format("dddd, DD.MM HH:mm") });
+                                if (maxDate.isBefore()) {
+                                    user.alerts.push({
+                                        name: t.data.name,
+                                        last: moment(last.dataTime),
+                                        warningDays: t.data.warningDays
+                                    });
+                                }
+                            }
+                        });
+
+                        // Hack for Buster
+                        if (true) {
+                            // Assume sorted list
+                            var last = _.findLast(usersDoneIts, { type: 1 });
+                            if (last) {
+
+                                var maxDate = moment(last.dateTime).add(2, 'days');
+                                //console.log('compare', { task:t, max: maxDate.format("dddd, DD.MM HH:mm"), last:moment(last.dateTime).format("dddd, DD.MM HH:mm") });
+                                if (maxDate.isBefore()) {
+                                    user.alerts.push({
+                                        name: 'Buster',
+                                        last: moment(last.dataTime),
+                                        warningDays: 2
+                                    });
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    //console.log("Alerts for user calculated", user.alerts);
+                });
+                console.log("Alerts refreshed. Using", { members: self.saved.members, tasks: self.tavlaSetting.tasks, doneIts: self.doneIts });
+
+
             },
 
             parseTavlaSetting: function (ts) {
@@ -300,7 +365,7 @@
                 task.JsonStringifiedData = JSON.stringify(task.data);
 
                 if (task.id == null) {
-                    settingTable.insert(task).then(function(d) {
+                    settingTable.insert(task).then(function (d) {
                         console.log("Created task setting", task, d);
                         dfd.resolve(d);
                     }, function (err) {
@@ -368,7 +433,7 @@
 
                 }).done(function (d) {
 
-                    console.log("Got weather", d.result);
+                    //console.log("Got weather", d.result);
                     var formatStr = 'D/M ddd HH:MM';
 
                     var dayNo = 0;
@@ -385,7 +450,7 @@
                     }
 
                     self.weather = days;
-                    console.log("FINAL VM -------------", self);
+                    console.log("------------FINAL VM -------------", self);
                     dfd.resolve(d);
                 });
                 return dfd.promise;
@@ -454,12 +519,14 @@
             //console.log("kjører todaysOfType...........");
             var filtered = [];
             // loop through existing Array
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i];
-                // check if the individual Array element begins with `a` or not
-                if (item.type === type && moment(item.dateTime).isSame(moment(), 'day')) {
-                    // push it into the Array if it does!
-                    filtered.push(item);
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // check if the individual Array element begins with `a` or not
+                    if (item.type === type && moment(item.dateTime).isSame(moment(), 'day')) {
+                        // push it into the Array if it does!
+                        filtered.push(item);
+                    }
                 }
             }
             // boom, return the Array after iteration's complete
@@ -473,12 +540,15 @@
             var filtered = [];
             //console.log("kjører hoursOld...........");
             // loop through existing Array
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i];
-                // check if the individual Array element begins with `a` or not
-                if (moment(item.dateTime).add(hours, 'hours').isAfter()) {
-                    // push it into the Array if it does!
-                    filtered.push(item);
+            if (items) {
+
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // check if the individual Array element begins with `a` or not
+                    if (moment(item.dateTime).add(hours, 'hours').isAfter()) {
+                        // push it into the Array if it does!
+                        filtered.push(item);
+                    }
                 }
             }
             // boom, return the Array after iteration's complete
@@ -490,7 +560,7 @@
         return function (items, user, stop) {
             // Create a new Array
             var filtered = [];
-            if (user && user.id) {
+            if (items && user && user.id) {
                 //console.log("kjører taskEnabledForUser...........");
                 // loop through existing Array
                 for (var i = 0; i < items.length; i++) {
@@ -514,20 +584,20 @@
         return function (items, user, stop) {
             // Create a new Array
             var filtered = [];
-            if (user && user.name) {
-                //console.log("kjører latestForUser...........");
-                // loop through existing Array
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    // check if the individual Array element begins with `a` or not
-                    if (moment(item.dateTime).add(7, 'days').isAfter() && item.user == user.name) {
-                        // push it into the Array if it does!
-                        filtered.push(item);
+                if (items && user && user.name) {
+                    //console.log("kjører latestForUser...........");
+                    // loop through existing Array
+                    for (var i = 0; i < items.length; i++) {
+                        var item = items[i];
+                        // check if the individual Array element begins with `a` or not
+                        if (moment(item.dateTime).add(7, 'days').isAfter() && item.user == user.name) {
+                            // push it into the Array if it does!
+                            filtered.push(item);
+                        }
                     }
-                }
+                // boom, return the Array after iteration's complete
+                filtered.reverse();
             }
-            // boom, return the Array after iteration's complete
-            filtered.reverse();
             return filtered;
         };
     })

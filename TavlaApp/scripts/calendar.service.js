@@ -125,11 +125,11 @@
                 if (self.isLoaded) {
                     dfd.resolve(self.items);
                 } else {
-                    console.log("calling getItems...");
+                    console.log("calling getCalendars...");
                     this.getAllCalendars().then(function (cals) {
 
                         // merge with settings
-                        console.log('mergining', cals, settings);
+                        //console.log('mergining', cals, settings);
 
 
                         var start = new Date();
@@ -145,6 +145,7 @@
                             self.isLoaded = true;
                             dfd.resolve(self.days);
                         } else {
+                            console.log("calling listEventsInRange from plugin...");
                             window.plugins.calendar.listEventsInRange(start, end, (function (d) {
                                 // merge with settings
                                 console.log('Got list of calendars items', JSON.stringify(d));

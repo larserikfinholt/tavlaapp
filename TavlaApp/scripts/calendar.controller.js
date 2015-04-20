@@ -7,5 +7,8 @@
         vm.reload=function() {
             CalendarService.reload();
         }
+        vm.logout=function() {
+            window.localStorage['hasLoggedInBefore'] = 'no';
+        }
 
 });

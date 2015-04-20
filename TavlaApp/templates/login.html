@@ -4,10 +4,16 @@
     </ion-header-bar>
 
     <ion-content class="center">
-        <div class="row">
+        <div class="row" ng-hide="vm.hasLoggedInBefore">
+
             <div class="col">
                 <button class="button button-large button-block button-positive" ng-click="vm.login()" type="submit">Log in</button>
                 <span ng-show="vm.result.isLoggedIn">Logged in!</span>
+            </div>
+        </div>
+        <div class="row" ng-show="vm.hasLoggedInBefore">
+            <div class="col">
+                <h3>Logger på...</h3>
             </div>
         </div>
     </ion-content>

@@ -10,11 +10,12 @@
         vm.login = function () {
 
             vm.result = null;
-            TavlaService.authenticate().then(function(auth) {
+            TavlaService.authenticate().then(function (auth) {
                 console.log("Authentication result:", auth);
-                TavlaService.login().then(function(data) {
+                TavlaService.login().then(function (data) {
                     var d = data.result;
-                    console.log("logged in to Tavla", d);
+                    //console.log("logged in to Tavla", d);
+                    window.localStorage['hasLoggedInBefore'] = 'yes';
 
                     vm.result = d;
                     if (d.registerState === "completed") {
@@ -23,7 +24,7 @@
                         console.log("Register state");
                         $state.go("register", { 'status': 'San Diego' });
                     }
-                }, function(d) {
+                }, function (d) {
                     vm.result = d;
                     console.warn("Could not log in", d);
                     vm.loginFail = { text: "Could not log in", error: d };
@@ -57,4 +58,16 @@
             });
         }
 
-    });
+        vm.init = function () {
+            var hasLoggedInBefore = window.localStorage['hasLoggedInBefore'] || 'no';
+            if (hasLoggedInBefore == 'yes') {
+                vm.hasLoggedInBefore = true;
+                console.log("Waiting for platform ready...");
+                ionic.Platform.ready(function() {
+                    vm.login();
+                });
+            }
+        }
+    vm.init();
+
+});

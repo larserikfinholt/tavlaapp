@@ -20,7 +20,11 @@
         vm.taskClick = function (task) {
             $scope.modal.hide();
             $scope.modalAlert.hide();
-            TavlaService.registerDoneIt(vm.user, task.data.taskTypeId).then(function (d) { TavlaService.doneIts.push(d); });
+            TavlaService.registerDoneIt(vm.user, task.data.taskTypeId).then(function(d) {
+                TavlaService.doneIts.push(d);
+                TavlaService.refreshAlerts();
+
+            });
             console.log("TaskClick", task, vm.user);
             vm.user = null;
         };
@@ -72,10 +76,10 @@
             vm.tavlaService.tavlaSetting.diverse.data.shoppingList.push(toAdd);
             vm.saving = true;
             vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
-                $ionicLoading.show({
-                    template: 'Added: ' + item,
-                    duration: 1500
-                });
+                //$ionicLoading.show({
+                //    template: 'Added: ' + item,
+                //    duration: 1500
+                //});
                 console.log("Saved", r);
                 vm.saving = false;
             });
@@ -87,7 +91,7 @@
                 vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
                     $ionicLoading.show({
                         template: 'Updated...',
-                        duration: 1500
+                        duration: 500
                     });
                 });
             }
