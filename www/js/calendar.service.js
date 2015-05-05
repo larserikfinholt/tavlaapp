@@ -101,7 +101,8 @@
                 } else {
                     console.log('calling getAllCalendars...');
                     ionic.Platform.ready(function () {
-                        console.log("Device ready", plugins);
+                        console.log("Device ready", isDevice);
+                        //console.log("Device ready", plugins);
                         if (!isDevice) {
                             console.log('FAKE!!!');
                             self.calendars = Mocks.calendars;
