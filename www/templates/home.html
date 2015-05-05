@@ -20,13 +20,13 @@
 
                         <!--<tavla-weather model="vm.tavlaService.weather[$index]" class="tavlaWeatherSmall" />-->
                     </div>
-                    <a class="item item-icon-left" href="#" ng-repeat="item in day.items">
+                    <div class="item item-icon-left" href="#" ng-repeat="item in day.items">
                         <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
                         {{item.title}}
                         <span class="item-note">
                             {{item.dtstart|date:'HH:mm'}}
                         </span>
-                    </a>
+                    </div>
                     <!--<div class="item" ng-repeat="item in day.items">
                     {{item.title}}
                 </div>-->

@@ -16,28 +16,16 @@
        specific language governing permissions and limitations
        under the License.
 */
+
 package org.apache.cordova;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 
-@Deprecated // Deprecated in 3.1. To be removed in 4.0.
-public class JSONUtils {
-	public static List<String> toStringList(JSONArray array) throws JSONException {
-        if(array == null) {
-            return null;
-        }
-        else {
-            List<String> list = new ArrayList<String>();
-
-            for (int i = 0; i < array.length(); i++) {
-                list.add(array.get(i).toString());
-            }
-
-            return list;
-        }
-    }
+/*
+ * Any exposed Javascript API MUST implement these three things!
+ */
+public interface ExposedJsApi {
+    public String exec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException;
+    public void setNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException;
+    public String retrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException;
 }
