@@ -96,7 +96,7 @@
     </ion-content>
     <div class="bar bar-footer">
         <div class="button-bar">
-            <button class="button" ng-repeat="user in vm.tavlaService.saved.members" ng-click="vm.showUserDialog(user)">
+            <button class="button button-dark" ng-repeat="user in vm.tavlaService.saved.members" ng-click="vm.showUserDialog(user)">
                 {{user.name}} <span class="badge badge-assertive" ng-show="user.alerts.length">{{user.alerts.length}}</span>
             </button>
         </div>
