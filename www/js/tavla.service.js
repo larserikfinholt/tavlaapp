@@ -247,7 +247,7 @@
                                 if (maxDate.isBefore()) {
                                     user.alerts.push({
                                         name: t.data.name,
-                                        last: moment(last.dataTime),
+                                        last: moment(last.dateTime),
                                         warningDays: t.data.warningDays
                                     });
                                 }
@@ -265,7 +265,7 @@
                                 if (maxDate.isBefore()) {
                                     user.alerts.push({
                                         name: 'Buster',
-                                        last: moment(last.dataTime),
+                                        last: moment(last.dateTime),
                                         warningDays: 2
                                     });
                                 }

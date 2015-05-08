@@ -1,24 +1,10 @@
 ﻿<ion-modal-view style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
     <ion-header-bar class=" bar bar-header bar-stable">
-    <h1 class="title">Så bra, hva har du gjort?</h1>
-    <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+        <h1 class="title">Så bra, hva har du gjort?</h1>
+        <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
     </ion-header-bar>
     <ion-content class="">
         <div class="row">
-            <div class="col" ng-show="vm.user.alerts.length">
-
-                <div class="list list-inset">
-                    <div class="list-item item-divider">
-                        Dine warnings <span class="badge badge-assertive">{{vm.user.alerts.length}}</span>
-                    </div>
-                    <div class="list-item energized" ng-repeat="alert in vm.user.alerts">
-                        {{alert.name}}
-                        <span class="item-note">
-                            {{alert.last.format('dddd')}}
-                        </span>
-                    </div>
-                </div>
-            </div>
             <div class="col">
                 <div class="list list-inset">
                     <div class="list-item">
@@ -33,13 +19,37 @@
                 </div>
             </div>
             <div class="col">
-                <div class="tavla-points"><span>{{vm.points}}</span>poeng</div>
-                <div>Dine siste aktiviteter</div>
-                <div ng-repeat="d in vm.tavlaService.doneIts | latestForUser:vm.user ">
-                    {{vm.getTaskNameForType(d)}}
-                    <span class="item-note">
-                        {{d.dateTime|date:'EEE dd.MM HH:mm'}}
-                    </span>
+                <div class="row">
+                    <div class="col">
+                        <div class="tavla-points"><span>{{vm.points}}</span> poeng</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" ng-show="vm.user.alerts.length">
+
+                        <div class="list-item_ _item-divider">
+                            Dine warnings <span class="badge badge-assertive">{{vm.user.alerts.length}}</span>
+                        </div>
+                        <div class="tavla-text-alert"  ng-repeat="alert in vm.user.alerts">
+                            {{alert.name}}
+                            <span class="tavla-text-alert item-note" >
+                                Siste gang: {{alert.last.format('dddd')}}
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div>Dine siste aktiviteter</div>
+                        <div ng-repeat="d in vm.tavlaService.doneIts | latestForUser:vm.user ">
+                            {{vm.getTaskNameForType(d)}}
+                            <span class="item-note">
+                                {{d.dateTime|date:'EEE dd.MM HH:mm'}}
+                            </span>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>

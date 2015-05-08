@@ -58,8 +58,8 @@
                     </div>
                     <div class="item">
                         <button class="button button-assertive button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:4).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
-                        <div class="list list-inset">
-                            <div class="list-item" ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
+                        <div >
+                            <div ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
                                 {{d.user}}
                                 <span class="item-note">
                                     {{d.dateTime|date:'HH:mm'}}
@@ -79,8 +79,8 @@
                         </button>
                     </div>
                     <div class="item">
-                        <div class="list list-inset" ng-click="vm.showShopping()">
-                            <div class="list-item" ng-repeat="d in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index">
+                        <div  ng-click="vm.showShopping()">
+                            <div ng-repeat="d in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index">
                                 {{d.title}}
                             </div>
 
