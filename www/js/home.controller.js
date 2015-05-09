@@ -18,11 +18,13 @@
             vm.taskClick({data: { taskTypeId: 1 } });
         };
         vm.taskClick = function (task) {
+            vm.loading = true;
             $scope.modal.hide();
             $scope.modalAlert.hide();
             TavlaService.registerDoneIt(vm.user, task.data.taskTypeId).then(function(d) {
                 TavlaService.doneIts.push(d);
                 TavlaService.refreshAlerts();
+                vm.loading = false;
 
             });
             console.log("TaskClick", task, vm.user);

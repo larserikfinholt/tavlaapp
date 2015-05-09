@@ -57,7 +57,7 @@
                         Buster
                     </div>
                     <div class="item">
-                        <button class="button button-assertive button-full" ng-hide="(vm.tavlaService.doneIts|todaysOfType:1|hoursOld:4).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
+                        <button class="button button-assertive button-full" ng-hide="vm.loading || (vm.tavlaService.doneIts|todaysOfType:1|hoursOld:4).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
                         <div >
                             <div ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
                                 {{d.user}}
@@ -97,7 +97,7 @@
     <div class="bar bar-footer">
         <div class="button-bar">
             <button class="button button-dark" ng-repeat="user in vm.tavlaService.saved.members" ng-click="vm.showUserDialog(user)">
-                {{user.name}} <span class="badge badge-assertive" ng-show="user.alerts.length">{{user.alerts.length}}</span>
+                {{user.name}} <span class="badge badge-assertive" ng-show="!vm.loading && user.alerts.length">{{user.alerts.length}}</span>
             </button>
         </div>
     </div>
