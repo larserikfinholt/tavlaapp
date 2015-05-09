@@ -73,18 +73,24 @@
         }
         vm.addShoppingListItem = function (item) {
             var toAdd = {};
-            toAdd.title = item;
+            toAdd.data = item;
             console.log("Addding", toAdd);
-            vm.tavlaService.tavlaSetting.diverse.data.shoppingList.push(toAdd);
             vm.saving = true;
-            vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
-                //$ionicLoading.show({
-                //    template: 'Added: ' + item,
-                //    duration: 1500
-                //});
-                console.log("Saved", r);
+
+            vm.tavlaService.addListItem(0, item).then(function (d) {
+                vm.tavlaService.shoppingList.push(d);
+                console.log("Added", d, vm.tavlaService.shoppingList);
                 vm.saving = false;
             });
+
+            //vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
+            //    //$ionicLoading.show({
+            //    //    template: 'Added: ' + item,
+            //    //    duration: 1500
+            //    //});
+            //    console.log("Saved", r);
+            //    vm.saving = false;
+            //});
         }
         vm.shoppingListRemoveItem = function (item) {
             var index = vm.tavlaService.tavlaSetting.diverse.data.shoppingList.indexOf(item);

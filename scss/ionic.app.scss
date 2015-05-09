@@ -1,0 +1,115 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+$energized:                       #ffc900 !default;
+$base-color:   #ccc;
+
+$base-background-color:           #111 !default;
+$light:                           #FFF !default;
+$dark:                            #000 !default;
+$item-divider-bg:                 #282828 !default;
+$item-divider-color:              #888 !default;
+$item-default-bg:                 #181818 !default;
+$item-default-border:             #212121 !default;
+$item-default-text:               #aaa !default;
+
+$item-stable-bg:                 #222 !default;
+
+$bar-stable-bg:                   #222 !default;
+$bar-stable-text:                 #777 !default;
+/*$bar-stable-border:               $button-stable-border !default;
+$bar-stable-active-bg:            $button-stable-active-bg !default;
+$bar-stable-active-border:        $button-stable-active-border !default;*/
+
+$modal-bg-color:                  #222 !default;
+$modal-backdrop-bg-active:        #BBB !default;
+$modal-backdrop-bg-inactive:      rgba(0,0,0,0) !default;
+
+$button-dark-bg:#282828 !default;
+
+$input-bg:                        $light !default;
+
+$input-color:                     $light !default;
+$input-border:                    $item-default-border !default;
+$input-label-color:               $light !default;
+$input-color-placeholder:         lighten($dark, 40%) !default;
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+$myinputbg :$item-default-bg;
+.list-item {
+  background-color: $item-default-bg;
+}
+.list-inset {
+    background-color:$item-default-bg;
+}
+.bar-footer {
+    background-color:$base-background-color;
+}
+.input-label {
+    background-color:$myinputbg ;
+    color:$light;
+} 
+.item-input {
+    background-color:$myinputbg ;
+    color:$light;
+}
+.item-select {
+    background-color:$myinputbg ;
+    color:$light;
+}
+input, select {
+    background-color:$myinputbg ;
+}
+.item-select select {
+    background-color:$myinputbg ;
+    color:$light;
+}
+.item-input input, .item-input textarea {
+     background-color:$myinputbg ;
+    color:$light;
+}
+.item-stacked-label input {
+     background-color:$myinputbg ;
+    color:$light;
+}
+
+.menu, .item-complex .item-content {
+     background-color:$myinputbg ;
+
+}
+
+.tavla-points {
+    font-size:90px;
+    display:inline-block;
+    padding-top:30px;
+    padding-bottom:70px;
+}
+
+.list.list-inset .list-item, .list-inset { 
+    background-color: #222;
+}
+
+.tavla-text-alert {
+    color:$energized;
+}

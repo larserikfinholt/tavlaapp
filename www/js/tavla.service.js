@@ -1,12 +1,12 @@
 ﻿angular.module('tavla')
-    .factory('TavlaService', function ($q, $http, Azureservice, Mocks) {
-
+    .factory('TavlaService', function ($q, $http, Mocks, $ionicPlatform) {
+        var client;
         var root = 'https://tavlaapi.azure-mobile.net/';
         if (window.tinyHippos != undefined) {
             root = "http://localhost:17588";
+            client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
         }
-        var client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
-
+        console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
 
 
         var service = {
@@ -16,6 +16,7 @@
             saved: null,
             doneIts: null,
             tavlaSetting: {},
+            shoppingList:null,
             weather: [],
             errors: [],
 
@@ -27,16 +28,19 @@
 
                     dfd.resolve('ripple');
                 } else {
-                    console.log("Prevent sleep - starting insomnia...");
-                    window.plugins.insomnia.keepAwake();
-                    console.log("Calling authenticate with google...");
-                    client.login('google').done(function (d) {
-                        // Azureservice.login('google').then(function () {
-                        console.log("Google login success",d);
-                        dfd.resolve({ isLoggedIn: true, user: d.userId });
-                    }, function () {
-                        console.warn("Noe gikk feil i google pålogging", d);
-                        dfd.resolve({ isLoggedIn: false, error: d });
+                    console.log("DEVICE------");
+                    $ionicPlatform.ready(function () {
+                        client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
+                        console.log("Prevent sleep - starting insomnia...");
+                        window.plugins.insomnia.keepAwake();
+                        console.log("Calling authenticate with google...");
+                        client.login('google').done(function (d) {
+                            console.log("Google login success", d);
+                            dfd.resolve({ isLoggedIn: true, user: d.userId });
+                        }, function () {
+                            console.warn("Noe gikk feil i google pålogging", d);
+                            dfd.resolve({ isLoggedIn: false, error: d });
+                        });
                     });
                 }
 
@@ -56,10 +60,8 @@
                     }
 
                 }).done(function (d) {
-                    // Azureservice.login('google').then(function () {
                     self.updates++;
                     console.log("Completed Start call - main setting loaded", d.result, self.updates);
-                    //Azureservice.query('Todos').then(function (d) {
                     self.isSettingsLoaded = true;
                     self.saved = d.result;
                     dfd.resolve(d);
@@ -81,9 +83,7 @@
                     body: model,
                     method: "post"
                 }).done(function (d) {
-                    // Azureservice.login('google').then(function () {
                     console.log("Ferdig registrert på!");
-                    //Azureservice.query('Todos').then(function (d) {
                     console.log("Logged in", d.result);
                     self.isSettingsLoaded = true;
                     self.saved = d.result;
@@ -114,7 +114,6 @@
 
             logout: function () {
                 var dfd = $q.defer();
-                //Azureservice.logout();
                 client.logout();
                 dfd.resolve({ isLoggedIn: false, logout: new Date() });
                 return dfd.promise;
@@ -171,7 +170,10 @@
                             self.doneIts = d;
                             self.refreshAlerts();
 
-                            dfd.resolve({ saved: true, result: d });
+                            self.loadAllListItems().then(function () {
+                                dfd.resolve({ saved: true, result: d });
+
+                            });
                         });
                     });
                 } else {
@@ -398,6 +400,50 @@
 
             },
 
+            loadAllListItems:function(){
+                var self = this;
+                var dfd = $q.defer();
+                if (self.shoppingList === null) {
+                    console.log("Loading listItems's...");
+                    var doneItTable = client.getTable('listItem');
+                    doneItTable.read().then(function (d) {
+                        //console.log("Loaded doneits, but waiting on TavlaSettings", d);
+
+                            console.log("Loaded listItems", d);
+                            self.shoppingList = d;
+                            dfd.resolve(d);
+                    });
+                } else {
+                    dfd.resolve(self.shoppingList);
+                }
+
+                return dfd.promise;
+            },
+             addListItem: function (listId, data) {
+                var self = this;
+                var dfd = $q.defer();
+                console.log("Calling add addListItem...");
+                var doneItTable = client.getTable('listItem');
+                doneItTable.insert({ type: listId, data:data }).then(function (d) {
+                    console.log("Added listItem", d);
+                    //self.doneIts.push(d);
+                    dfd.resolve(d);
+                });
+                return dfd.promise;
+             },
+             removeListItem: function (lid) {
+                 var self = this;
+                 var dfd = $q.defer();
+                 console.log("Calling removeListItem...");
+                 var doneItTable = client.getTable('listItem');
+                 doneItTable.del({id:id }).then(function (d) {
+                     console.log("deleted listItem", id);
+                     //self.doneIts.push(d);
+                     dfd.resolve(id);
+                 });
+                 return dfd.promise;
+             },
+
             refresh: function () {
                 var self = this;
                 var dfd = $q.defer();
@@ -405,10 +451,13 @@
                 self.isSettingsLoaded = true;
                 self.login().then(function () {
                     self.doneIts = null;
+                    self.shoppingList = null;
                     self.loadAllDoneIts().then(function () {
+                      
+                            dfd.resolve();
+                            self.getWeatherForecast();
+                       
 
-                        dfd.resolve();
-                        self.getWeatherForecast();
 
                     });
                 });

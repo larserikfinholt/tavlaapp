@@ -1,0 +1,25 @@
+﻿<ion-modal-view>
+    <ion-nav-bar>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-header-bar>
+        <h1 class="title">Register</h1>
+    </ion-header-bar>
+    <ion-content>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                If you're the first person in the family using this app, please click "Register new Family"
+                <button class="button button-outline button-block button-positive" ng-click="vm.setMode('register')">Register new family</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-text-wrap">
+                Other members of the family could just click "Join my family"
+                <button class="button button-block button-positive" ng-click="vm.setMode('join')">Join my family</button>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-modal-view>
