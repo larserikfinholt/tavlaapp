@@ -1,35 +1,8 @@
 {
-    "com.microsoft.azure-mobile-services": {
-        "source": {
-            "type": "registry",
-            "id": "com.microsoft.azure-mobile-services"
-        }
-    },
     "org.apache.cordova.inappbrowser": {
         "source": {
             "type": "registry",
             "id": "org.apache.cordova.inappbrowser"
-        }
-    },
-    "nl.x-services.plugins.calendar": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
-            "subdir": "."
-        }
-    },
-    "nl.x-services.plugins.insomnia": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
-            "subdir": "."
-        }
-    },
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-whitelist.git",
-            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
@@ -40,18 +13,38 @@
             "id": "org.apache.cordova.device"
         }
     },
-    "cordova-plugin-device": {
+    "com.microsoft.azure-mobile-services": {
         "source": {
-            "type": "git",
-            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git",
-            "subdir": "."
-        }
+            "type": "registry",
+            "id": "com.microsoft.azure-mobile-services"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "cordova-plugin-inappbrowser": {
+    "nl.x-services.plugins.insomnia": {
         "source": {
             "type": "git",
-            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
+            "url": "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
             "subdir": "."
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "nl.x-services.plugins.calendar": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

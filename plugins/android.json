@@ -9,7 +9,7 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
                         },
                         {
@@ -17,11 +17,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-                            "count": 2
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
                             "count": 1
                         },
                         {
@@ -48,19 +44,13 @@
         }
     },
     "installed_plugins": {
-        "nl.x-services.plugins.calendar": {
+        "com.microsoft.azure-mobile-services": {
             "PACKAGE_NAME": "no.tavla.app"
         },
         "nl.x-services.plugins.insomnia": {
             "PACKAGE_NAME": "no.tavla.app"
         },
-        "com.microsoft.azure-mobile-services": {
-            "PACKAGE_NAME": "no.tavla.app"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "no.tavla.app"
-        },
-        "cordova-plugin-device": {
+        "nl.x-services.plugins.calendar": {
             "PACKAGE_NAME": "no.tavla.app"
         },
         "cordova-plugin-whitelist": {

@@ -9,6 +9,8 @@
       <!-- Enable all requests, inline styles, and eval() -->
       <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.azure-mobile.net http://localhost:1337 http://ajax.aspnetcdn.com">
 
+      <script src="http://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.2.5.min.js"></script>
+
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
 
@@ -20,7 +22,6 @@
       <script src="lib/moment-range.js"></script>
      
      <!--<script src="http://localhost:1337/vorlon.js"></script>-->
-      <script src="http://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.2.5.min.js"></script>
      
     <!--<script src="scripts/frameworks/angular-azure-mobile-service.min.js"></script>
     <script src="scripts/frameworks/moment.js"></script>
@@ -28,8 +29,6 @@
     <script src="scripts/frameworks/moment-no.js"></script>
     <script src="scripts/frameworks/lodash.js"></script>-->
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
@@ -44,6 +43,10 @@
     <script src="js/settings-tasks.controller.js"></script>
     <script src="js/register.controller.js"></script>
     <script src="js/regular.controller.js"></script>
+
+      <!-- cordova script (this will be a 404 during development) -->
+      <script src="cordova.js"></script>
+
   </head>
 
     <body ng-app="tavla">

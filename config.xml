@@ -96,10 +96,8 @@
   <preference name="InAppBrowserStorageEnabled" value="True" />
   <preference name="SuppressesIncrementalRendering" value="False" />
   <preference name="Fullscreen" value="True" />
-  <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
-  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:plugin name="com.microsoft.azure-mobile-services" version="1.2.7" />
-  <vs:plugin name="cordova-plugin-inappbrowser" version="1.0.1-dev" />
-  <vs:plugin name="cordova-plugin-device" version="1.0.1-dev" />
-  <vs:plugin name="cordova-plugin-whitelist" version="1.0.1-dev" />
+  <vs:plugin name="org.apache.cordova.inappbrowser" version="0.6.0" />
+  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
+  <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
 </widget>
