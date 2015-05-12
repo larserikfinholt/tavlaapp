@@ -7,7 +7,7 @@
             console.log("Using localhost yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
             client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
         }
-        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+        console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmm");
 
 
         var service = {
