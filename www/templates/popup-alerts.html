@@ -1,0 +1,15 @@
+﻿<ion-modal-view >
+    <ion-header-bar class="bar bar-header bar-stable">
+        <h1 class="title">Bra for Buster - hvem gikk?</h1>
+        <button class="button button-clear" ng-click="modalAlert.hide()">Lukk</button>
+    </ion-header-bar>
+    <ion-content class="" >
+        <div class="row responsive-sm" >
+            <div class="col" ng-repeat="user in vm.settings.members">
+                <button class="button button-positive button-large" ng-click="vm.buster(user)">{{user.name}}</button>
+            </div>
+        </div>
+        <button class="button button-clear button-block" ng-click="modalAlert.hide()">Hakke gått enda, men skal snart!</button>
+
+    </ion-content>
+</ion-modal-view>

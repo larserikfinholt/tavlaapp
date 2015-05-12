@@ -1,0 +1,104 @@
+﻿<ion-view title="Home">
+    <!--<ion-nav-title>
+        <div class="bar bar-header">
+            <div class="h1 title">Tavla</div>
+            <button class="button button-clear button-positive">Handleliste</button>
+        </div>
+    </ion-nav-title>-->
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..."
+                       on-refresh="vm.refresh()">
+        </ion-refresher>
+        <div class="row responsive-sm">
+            <div class="col" ng-repeat="day in vm.calendarService.days | dayRange:0:2">
+                <div class="list">
+                    <div class="item item-divider">
+                        {{day.date.format('dddd')}}
+                        <div class="weather"><span class="ng-binding">{{vm.tavlaService.weather[$index].temperature}}C</span><img alt="symbol" ng-src="http://symbol.yr.no/grafikk/sym/b38/{{vm.tavlaService.weather[$index].symbolNumber}}.png"></div>
+
+
+
+                        <!--<tavla-weather model="vm.tavlaService.weather[$index]" class="tavlaWeatherSmall" />-->
+                    </div>
+                    <div class="item item-icon-left" href="#" ng-repeat="item in day.items">
+                        <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
+                        {{item.title}}
+                        <span class="item-note">
+                            {{item.dtstart|date:'HH:mm'}}
+                        </span>
+                    </div>
+                    <!--<div class="item" ng-repeat="item in day.items">
+                    {{item.title}}
+                </div>-->
+                </div>
+            </div>
+            <div class="col">
+                <div class="list" style="max-height: 400px;">
+                    <div class="item item-divider">
+                        Om noen dager
+                    </div>
+
+
+                    <div class="item item-icon-left" ng-repeat="item in vm.calendarService.days| upcommingEvents:3:30">
+                        <i class="icon tavla-user-icon">{{::item.user.name[0]}}</i>
+                        {{item.title}}
+                        <span class="item-note">
+                            {{item.dtstart|date:'EEE dd MMM'}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row  responsive-md">
+            <div class="col">
+                <div class="list">
+                    <div class="item item-divider_">
+                        Buster
+                    </div>
+                    <div class="item">
+                        <button class="button button-assertive button-full" ng-hide="vm.loading || (vm.tavlaService.doneIts|todaysOfType:1|hoursOld:4).length>0 " ng-click="vm.alertClick(1)">Buster må på tur!</button>
+                        <div >
+                            <div ng-repeat="d in vm.tavlaService.doneIts | todaysOfType:1 ">
+                                {{d.user}}
+                                <span class="item-note">
+                                    {{d.dateTime|date:'HH:mm'}}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="list">
+                    <div class="item item-button-right">
+                        {{vm.saving?'Lagrer...':'Handleliste'}}
+                        <button class="button button-clear button-positive" ng-click="vm.addShopping()">
+                            Legg til
+                        </button>
+                    </div>
+                    <div class="item">
+                        <div  ng-click="vm.showShopping()">
+                            <div ng-repeat="d in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index">
+                                {{d.title}}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <button class="button button-dark" ng-repeat="user in vm.tavlaService.saved.members" ng-click="vm.showUserDialog(user)">
+                {{user.name}} <span class="badge badge-assertive" ng-show="!vm.loading && user.alerts.length">{{user.alerts.length}}</span>
+            </button>
+        </div>
+    </div>
+</ion-view>

@@ -1,0 +1,58 @@
+﻿<ion-view view-title="Regular events">
+    <ion-content>
+        <div class="row">
+            <div class="col" ng-repeat="day in vm.tavlaService.tavlaSetting.regularEvents.data">
+                <div class="card list">
+                    <div class="item item-divider">
+                        {{vm.weekdays[day.dayNo]}}
+                    </div>
+                    <div class="item" ng-repeat="event in day.events" ng-click="vm.edit(event)">
+                        <i class="icon tavla-user-icon">{{event.user.name[0]}}</i>
+                        {{event.title}}
+                        <span class="item-note">
+                            {{event.hour+':'+event.minutes}}
+                        </span>
+                    </div>
+                    <div class="item item-divider">
+                        <button class="button button-calm" ng-click="vm.add(day)">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <!--<pre>{{vm|json}}</pre>-->
+        <!--<div >
+            <div class="list list-inset">
+                
+            <a class="item item-icon-left" ng-click="vm.edit(user)" ng-repeat="user in vm.tavlaService.saved.members">
+                <i class="icon ion-person"></i>
+                {{user.name}}
+                <span class="item-note">
+                    {{user.isAdmin?'Administrator':''}}
+                </span>
+            </a>-->
+
+
+        <!--<div class="item item-body">
+                <p>
+                    Some text about this user
+                </p>
+                <p>
+                    <p class="subdued">{{user.id?'Has connected to Tavla':'not connected yet'}}</p>
+                    <p class="subdued">{{user.calendars}}</p>
+                </p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" ng-click="vm.edit(user)">
+                    <i class="icon ion-edit"></i>
+                    Edit
+                </a>
+                <a class="tab-item" href="#">
+                    <i class="icon ion-trash-a"></i>
+                    Delete
+                </a>
+            </div>-->
+
+    </ion-content>
+</ion-view>

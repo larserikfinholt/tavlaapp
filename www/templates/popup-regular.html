@@ -1,0 +1,33 @@
+﻿<ion-modal-view >
+    <ion-header-bar class="bar bar-header bar-stable">
+        <h1 class="title">Legg til ny ukentlig hendelse</h1>
+        <button class="button button-clear" ng-click="modal.hide()">Lukk</button>
+    </ion-header-bar>
+    <ion-content class="" >
+        
+        
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="Title" ng-model="vm.currentEvent.title">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Klokkeslett</span>
+                <input type="number" placeholder="hours" max="23" min="0" ng-model="vm.currentEvent.hour">
+                <input type="number" placeholder="minutes" max="60" min="0" ng-model="vm.currentEvent.minutes">
+            </label>
+            <label class="item item-select item-stacked-label">
+                <span class="input-label">User</span>
+                <select ng-model="vm.currentEvent.user" ng-options="c as c.name for c in vm.tavlaService.saved.members"></select>
+            </label>
+            <div class="item ">
+                <button class="button button-assertive" ng-click="vm.save()">
+                    Save
+                </button>
+            </div>
+        </div>
+        
+
+        <pre>{{vm.currentEvent|json}}</pre>
+
+    </ion-content>
+</ion-modal-view>

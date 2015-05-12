@@ -1,0 +1,50 @@
+﻿<ion-view view-title="Settings">
+    <div class="bar bar-header bar-light">
+        <h1 class="title">{{vm.title}}</h1>
+    </div>
+    <ion-content>
+        
+        <div class="list list-inset">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Task Name</span>
+                <input type="text" placeholder="Enter name" ng-model="vm.task.data.name">
+            </label>
+            <label class="item item-select item-stacked-label">
+                <span class="input-label">Points</span>
+                <input type="number" placeholder="points" ng-model="vm.task.data.points">
+            </label>
+            <label class="item item-select item-stacked-label">
+                <span class="input-label">Max antall dager mellom hver</span>
+                <input type="number" placeholder="tom eller antall dager" ng-model="vm.task.data.warningDays">
+            </label>
+    <div class="item item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="vm.task.data.isEnabled">
+                </label>
+                Task is active
+            </div>
+           
+        </div>
+        
+        <ul class="list list-inset">
+            <li class="item item-divider">
+                Enabled for
+            </li>
+            <li class="item item-checkbox" ng-repeat="user in vm.task.data.users track by $index ">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="user.enabled">
+                </label>
+                {{user.name}}
+            </li>
+        </ul>
+        
+        <button class="button button-assertive" ng-click="vm.save()">
+            Save
+        </button>
+
+        <!--<pre>{{vm.task|json}}</pre>
+        <pre>{{vm.tavlaService.tavlaSetting.tasks.data|json}}</pre>
+        <pre>{{vm|json}}</pre>-->
+    </ion-content>
+    
+</ion-view>

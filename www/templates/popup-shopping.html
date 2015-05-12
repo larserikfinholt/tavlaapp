@@ -1,0 +1,40 @@
+﻿<ion-modal-view >
+    <ion-header-bar class="bar bar-header bar-stable">
+       
+        <h1 class="title">Hva trenger vi?</h1>
+        <button class="button button-clear" ng-click="modalShopping.hide()">Lukk</button>
+    </ion-header-bar>
+    <ion-content class="">
+        
+       
+        <ion-list show-delete="true"
+                  can-swipe="true">
+            <ion-item ng-repeat="item in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index"
+                      item="item"
+                      class="item-remove-animate">
+                {{item.title }}
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="vm.shoppingListRemoveItem(item)">
+                </ion-delete-button>
+               
+                <ion-option-button class="button-calm"
+                                   ng-click="share(item)">
+                    Share
+                </ion-option-button>
+                
+            </ion-item>
+           
+
+        </ion-list>
+        <div class="item item-input">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="skriv inn..." ng-model="jalla">
+            </label>
+            <button class="button button-calm" ng-click="vm.addShoppingListItem(jalla)">
+                Legg til
+            </button>
+        </div>
+        <button class="button button-light button-block" ng-click="modalShopping.hide()">Kommer ikke på noe mer nå!</button>
+
+    </ion-content>
+</ion-modal-view>
