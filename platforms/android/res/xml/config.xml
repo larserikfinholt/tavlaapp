@@ -10,6 +10,13 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
     <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png" />
@@ -27,17 +34,20 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">Lars Erik Finholt</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="*" />
     <vs:features />
     <preference name="SplashScreen" value="screen" />
     <preference name="windows-target-version" value="8.1" />
     <preference name="windows-phone-target-version" value="8.1" />
-    <preference name="KeepRunning" value="False" />
-    <preference name="ShowTitle" value="True" />
-    <preference name="InAppBrowserStorageEnabled" value="False" />
-    <preference name="SuppressesIncrementalRendering" value="True" />
+    <preference name="KeepRunning" value="True" />
+    <preference name="ShowTitle" value="False" />
+    <preference name="InAppBrowserStorageEnabled" value="True" />
+    <preference name="SuppressesIncrementalRendering" value="False" />
     <preference name="Fullscreen" value="True" />
     <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
     <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
     <vs:plugin name="com.microsoft.azure-mobile-services" version="1.2.7" />
-    <vs:plugin name="org.apache.cordova.inappbrowser" version="0.6.0" />
+    <vs:plugin name="cordova-plugin-inappbrowser" version="1.0.1-dev" />
+    <vs:plugin name="cordova-plugin-device" version="1.0.1-dev" />
+    <vs:plugin name="cordova-plugin-whitelist" version="1.0.1-dev" />
 </widget>

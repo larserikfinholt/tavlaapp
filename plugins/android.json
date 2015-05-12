@@ -18,6 +18,14 @@
                         },
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -47,6 +55,15 @@
             "PACKAGE_NAME": "no.tavla.app"
         },
         "com.microsoft.azure-mobile-services": {
+            "PACKAGE_NAME": "no.tavla.app"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "no.tavla.app"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "no.tavla.app"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "no.tavla.app"
         }
     },

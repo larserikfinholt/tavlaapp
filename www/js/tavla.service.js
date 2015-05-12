@@ -4,9 +4,10 @@
         var root = 'https://tavlaapi.azure-mobile.net/';
         if (window.tinyHippos != undefined) {
             root = "http://localhost:17588";
+            console.log("Using localhost yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
             client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
         }
-        console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 
 
         var service = {
@@ -37,8 +38,8 @@
                         client.login('google').done(function (d) {
                             console.log("Google login success", d);
                             dfd.resolve({ isLoggedIn: true, user: d.userId });
-                        }, function () {
-                            console.warn("Noe gikk feil i google pålogging", d);
+                        }, function (e) {
+                            console.warn("Noe gikk feil i google pålogging", e);
                             dfd.resolve({ isLoggedIn: false, error: d });
                         });
                     });
@@ -113,6 +114,7 @@
             },
 
             logout: function () {
+                console.log("LOGOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 var dfd = $q.defer();
                 client.logout();
                 dfd.resolve({ isLoggedIn: false, logout: new Date() });

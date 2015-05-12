@@ -113,6 +113,8 @@
                                 self.calendars = d;
                                 //TavlaService.getSupportedLanguages();
                                 dfd.resolve(self.calendars);
+                            }, function (e) {
+                                console.log("Error", e);
                             });
                         }
                     });
