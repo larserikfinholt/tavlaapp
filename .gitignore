@@ -188,3 +188,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+#ionic
+*.keystore
+*.sw*
+platforms/
+plugins/
