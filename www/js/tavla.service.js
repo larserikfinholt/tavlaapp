@@ -92,7 +92,7 @@ angular.module('tavla')
                 self.isSettingsLoaded = true;
                 self.saved = d.result;
                 dfd.resolve({ saved: true, result: d });
-            }, function () {
+            }, function (d) {
                     console.warn("Fikk ikke registrert", d);
                     dfd.resolve({ error: d });
                 });
@@ -117,7 +117,7 @@ angular.module('tavla')
         },
 
         logout: function () {
-            console.log("LOGOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log("LOGOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             var dfd = $q.defer();
             client.logout();
             dfd.resolve({ isLoggedIn: false, logout: new Date() });
@@ -479,7 +479,7 @@ angular.module('tavla')
             }).done(function (d) {
 
                 //console.log("Got weather", d.result);
-                var formatStr = 'D/M ddd HH:MM';
+                //var formatStr = 'D/M ddd HH:MM';
 
                 var dayNo = 0;
                 var days = [];
