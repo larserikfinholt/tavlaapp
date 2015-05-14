@@ -80,8 +80,8 @@
                     </div>
                     <div class="item">
                         <div  ng-click="vm.showShopping()">
-                            <div ng-repeat="d in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index">
-                                {{d.title}}
+                            <div ng-repeat="d in vm.tavlaService.shoppingList track by $index">
+                                {{d.data}}
                             </div>
 
                         </div>

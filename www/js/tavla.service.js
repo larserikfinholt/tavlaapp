@@ -3,14 +3,13 @@
 
 angular.module('tavla')
     .factory('TavlaService', function ($q, $http, Mocks, $ionicPlatform) {
-    var client;
     var root = 'https://tavlaapi.azure-mobile.net/';
-    if (window.tinyHippos != undefined || ionic.Platform.isWebView()) {
+    var client = WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
+    if (window.tinyHippos != undefined || !window.cordova) {
         root = "http://localhost:17588";
-        console.log("Using localhost yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+        console.log("Using localhost");
         client = new WindowsAzure.MobileServiceClient(root, 'jFWBtWeZsRaerKJzkCVCzkwgmdKBhI46');
     }
-    console.log("service at", root);
 
 
     var service = {
@@ -27,7 +26,7 @@ angular.module('tavla')
         authenticate: function () {
             var dfd = $q.defer();
 
-            if (window.tinyHippos != undefined) {
+            if (window.tinyHippos != undefined ) {
 
                 dfd.resolve('ripple');
             } else {
@@ -66,7 +65,7 @@ angular.module('tavla')
 
             }).done(function (d) {
                 self.updates++;
-                console.log("Completed Start call - main setting loaded", d.result, self.updates);
+                console.info("Completed Start call - main setting loaded", d.result, self.updates);
                 self.isSettingsLoaded = true;
                 self.saved = d.result;
                 dfd.resolve(d);
@@ -171,13 +170,12 @@ angular.module('tavla')
                     console.log("Loading settings...");
                     settingsTable.read().then(function (ts) {
                         self.parseTavlaSetting(ts);
-                        console.log("Loaded TavlsSettings and DoneIts");
                         self.doneIts = d;
                         self.refreshAlerts();
 
                         self.loadAllListItems().then(function () {
+                        console.info("Loaded TavlsSettings, DoneIts and ListItems");
                             dfd.resolve({ saved: true, result: d });
-
                         });
                     });
                 });
@@ -292,7 +290,7 @@ angular.module('tavla')
         parseTavlaSetting: function (ts) {
             var self = this;
 
-            console.log("parsing", ts);
+//            console.log("parsing", ts);
             //var t = ts[0].type;
 
             var tasks = _.where(ts, { type: 'task' });
@@ -309,8 +307,8 @@ angular.module('tavla')
                 diverse: {
                     id: ts[1].id,
                     data: ts[1].jsonStringifiedData ? JSON.parse(ts[1].jsonStringifiedData) : {
-                        yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml',
-                        shoppingList: [{ title: 'melk' }, { title: 'brød' }]
+                        yrPath: 'http://www.yr.no/sted/Norge/Telemark/Skien/Gulset/varsel.xml'
+                        
                     }
                 },
                 tasks: tasks,
@@ -361,7 +359,6 @@ angular.module('tavla')
         },
 
         saveTask: function (task) {
-            var self = this;
             var dfd = $q.defer();
             var settingTable = client.getTable('TavlaSetting');
 
@@ -391,7 +388,6 @@ angular.module('tavla')
         },
 
         registerDoneIt: function (user, type) {
-            var self = this;
             var dfd = $q.defer();
             console.log("Calling add doneit...");
             var doneItTable = client.getTable('doneIt');
@@ -410,10 +406,9 @@ angular.module('tavla')
             var dfd = $q.defer();
             if (self.shoppingList === null) {
                 console.log("Loading listItems's...");
-                var doneItTable = client.getTable('listItem');
-                doneItTable.read().then(function (d) {
+                var listItemTable = client.getTable('listItem');
+                listItemTable.read().then(function (d) {
                     //console.log("Loaded doneits, but waiting on TavlaSettings", d);
-
                     console.log("Loaded listItems", d);
                     self.shoppingList = d;
                     dfd.resolve(d);
@@ -425,26 +420,22 @@ angular.module('tavla')
             return dfd.promise;
         },
         addListItem: function (listId, data) {
-            var self = this;
             var dfd = $q.defer();
             console.log("Calling add addListItem...");
-            var doneItTable = client.getTable('listItem');
-            doneItTable.insert({ type: listId, data: data }).then(function (d) {
+            var listItemTable = client.getTable('listItem');
+            listItemTable.insert({ type: listId, data: data }).then(function (d) {
                 console.log("Added listItem", d);
-                //self.doneIts.push(d);
                 dfd.resolve(d);
             });
             return dfd.promise;
         },
-        removeListItem: function (lid) {
-            var self = this;
+        removeListItem: function (item) {
             var dfd = $q.defer();
-            console.log("Calling removeListItem...");
-            var doneItTable = client.getTable('listItem');
-            doneItTable.del({ id: lid }).then(function (d) {
-                console.log("deleted listItem", lid);
-                //self.doneIts.push(d);
-                dfd.resolve(lid);
+            console.log("Calling removeListItem...",item);
+            var listItemTable = client.getTable('listItem');
+            listItemTable.del({ id: item.id }).then(function () {
+                console.log("deleted listItem", item);
+                dfd.resolve(item.id);
             });
             return dfd.promise;
         },
@@ -504,7 +495,7 @@ angular.module('tavla')
                 }
 
                 self.weather = days;
-                console.log("------------FINAL VM -------------", self);
+                console.info("Final TavlaService model", self);
                 dfd.resolve(d);
             });
             return dfd.promise;
@@ -518,7 +509,7 @@ angular.module('tavla')
             var maxMatches = 1;
             var promptString = "Snakk nå"; // optional
             var language = "nb-NO";                     // optional
-            if (window.tinyHippos != undefined) {
+            if (window.tinyHippos != undefined || !window.cordova) {
                 dfd.resolve({ item: { title: 'melk' } });
             } else {
                 window.plugins.speechrecognizer.startRecognize(function (result) {
@@ -560,7 +551,7 @@ angular.module('tavla')
 
 
 
-    }
+    };
 
     return service;
 

@@ -1,5 +1,4 @@
 
-/// <reference path="../angularjs/angular.d.ts" />
 
 /**
  * Typescript definition for ionic framework

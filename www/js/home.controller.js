@@ -46,19 +46,19 @@
             } else {
                 return "Unknown task";
             }
-        }
+        };
 
         vm.showUserDialog = function (user) {
             vm.user = user;
             vm.points = TavlaService.getPointsForUser(user);
             $scope.modal.show();
-        }
+        };
         vm.alertClick = function (type) {
             $scope.modalAlert.show();
-        }
+        };
         vm.showShopping = function () {
             $scope.modalShopping.show();
-        }
+        };
         vm.addShopping = function () {
             vm.tavlaService.recognizeSpeech().then(function (a) {
                 if (a.item.title && a.item.title != 0) {
@@ -70,7 +70,7 @@
                     });
                 }
             });
-        }
+        };
         vm.addShoppingListItem = function (item) {
             var toAdd = {};
             toAdd.data = item;
@@ -91,21 +91,13 @@
             //    console.log("Saved", r);
             //    vm.saving = false;
             //});
-        }
+        };
         vm.shoppingListRemoveItem = function (item) {
-            var index = vm.tavlaService.tavlaSetting.diverse.data.shoppingList.indexOf(item);
-            if (index > -1) {
-                vm.tavlaService.tavlaSetting.diverse.data.shoppingList.splice(index, 1);
-                vm.tavlaService.saveSettingWithName('diverse').then(function (r) {
-                    $ionicLoading.show({
-                        template: 'Updated...',
-                        duration: 500
-                    });
-                });
-            }
-        }
+            vm.tavlaService.removeListItem(item).then(function(id){
+                _.remove(vm.tavlaService.shoppingList, {id:id});
+            });
+        };
 
-        vm.shoppingListItemToAdd = 'test';
 
         vm.refresh = function () {
             TavlaService.refresh().then(function () {
@@ -115,7 +107,7 @@
 
                 });
             });
-        }
+        };
 
         function init() {
             vm.tavlaService.getWeatherForecast();

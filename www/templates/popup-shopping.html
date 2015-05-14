@@ -9,10 +9,10 @@
        
         <ion-list show-delete="true"
                   can-swipe="true">
-            <ion-item ng-repeat="item in vm.tavlaService.tavlaSetting.diverse.data.shoppingList track by $index"
+            <ion-item ng-repeat="item in vm.tavlaService.shoppingList track by $index"
                       item="item"
                       class="item-remove-animate">
-                {{item.title }}
+                {{item.data }}
                 <ion-delete-button class="ion-minus-circled"
                                    ng-click="vm.shoppingListRemoveItem(item)">
                 </ion-delete-button>
