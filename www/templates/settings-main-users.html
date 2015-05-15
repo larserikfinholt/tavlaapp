@@ -1,0 +1,24 @@
+﻿<ion-view view-title="Users">
+
+
+
+    <ion-content>
+        <div>
+            <div class="list list-inset">
+
+                <a class="item item-icon-left" ng-click="vm.edit(user)" ng-repeat="user in vm.tavlaService.saved.members">
+                    <i class="icon ion-person"></i>
+                    {{user.name}}
+                    <span class="item-note">
+                        {{user.isAdmin?'Administrator':''}}
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <button class="button button-outline button-block button-positive" ng-click="vm.edit()">Add new member</button>
+
+
+      
+    </ion-content>
+</ion-view>

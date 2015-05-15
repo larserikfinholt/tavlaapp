@@ -1,0 +1,24 @@
+﻿<ion-view view-title="Tasks">
+
+
+
+    <ion-content>
+        <div>
+            <div class="list list-inset">
+                <a class="item item-icon-left" ng-click="vm.editTask(task)" ng-repeat="task in vm.tavlaService.tavlaSetting.tasks">
+                    <i class="icon-checkmark"></i>
+                    {{task.data.name}}
+                    <span ng-show="task.data.isEnabled" class="item-note">
+
+                        <span ng-repeat="user in task.data.users|filter:{enabled:true}">
+                            {{user.name}},
+                        </span>
+                    </span>
+                    <span ng-hide="task.data.isEnabled" class="item-note">disabled</span>
+                </a>
+            </div>
+        </div>
+
+        <button class="button button-outline button-block button-positive" ng-click="vm.editTask()">Add new Task</button>
+    </ion-content>
+</ion-view>

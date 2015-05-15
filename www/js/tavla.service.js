@@ -119,6 +119,7 @@ angular.module('tavla')
 
         logout: function () {
             console.log("LOGOUT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+             window.localStorage['hasLoggedInBefore'] = 'no';
             var dfd = $q.defer();
             client.logout();
             dfd.resolve({ isLoggedIn: false, logout: new Date() });

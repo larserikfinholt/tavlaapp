@@ -1,4 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts"/>
 var tavla;
 (function (tavla) {
     var SettingsMainController = (function () {
@@ -6,6 +5,10 @@ var tavla;
             this.$state = $state;
             this.tavlaService = tavlaService;
         }
+        SettingsMainController.$inject = [
+            '$state', 
+            'TavlaService'
+        ];
         SettingsMainController.prototype.usersClick = function () {
             this.$state.go('app.settings-main-users');
         };
@@ -18,18 +21,9 @@ var tavla;
                 _this.$state.go('login');
             });
         };
-        SettingsMainController.$inject = ['$state', 'TavlaService'];
         return SettingsMainController;
     })();
-    tavla.SettingsMainController = SettingsMainController;
+    tavla.SettingsMainController = SettingsMainController;    
 })(tavla || (tavla = {}));
+
 angular.module('tavla').controller('SettingsMainController', tavla.SettingsMainController);
-/// <reference path="../../typings/tsd.d.ts"/>
-var jalla = (function () {
-    function jalla(asd) {
-        console.log("Created");
-        ionic.Platform.isAndroid();
-    }
-    return jalla;
-})();
-//# sourceMappingURL=appBundle.js.map

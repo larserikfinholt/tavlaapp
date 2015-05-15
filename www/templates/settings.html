@@ -3,40 +3,25 @@
 
 
     <ion-content>
-        <h1 class="title">Users</h1>
-        <div>
+      
             <div class="list list-inset">
 
-                <a class="item item-icon-left" ng-click="vm.edit(user)" ng-repeat="user in vm.tavlaService.saved.members">
+                <a class="item item-icon-left item-icon-right" ng-click="vm.usersClick()">
                     <i class="icon ion-person"></i>
-                    {{user.name}}
-                    <span class="item-note">
-                        {{user.isAdmin?'Administrator':''}}
-                    </span>
+                    Users
+                   <i class="icon ion-arrow-right-c"></i>
                 </a>
-            </div>
-        </div>
-
-        <button class="button button-outline button-block button-positive" ng-click="vm.edit()">Add new member</button>
-
-
-        <h1 class="title">Tasks</h1>
-        <div>
-            <div class="list list-inset">
-                <a class="item item-icon-left" ng-click="vm.editTask(task)" ng-repeat="task in vm.tavlaService.tavlaSetting.tasks">
-                    <i class="icon ion-android-checkmark"></i>
-                    {{task.data.name}}
-                    <span ng-show="task.data.isEnabled" class="item-note">
-
-                        <span ng-repeat="user in task.data.users|filter:{enabled:true}">
-                            {{user.name}},
-                        </span>
-                    </span>
-                    <span ng-hide="task.data.isEnabled" class="item-note">disabled</span>
+                <a class="item item-icon-left item-icon-right" ng-click="vm.tasksClick()">
+                    <i class="icon ion-checkmark"></i>
+                    Tasks
+                   <i class="icon ion-arrow-right-c"></i>
                 </a>
+                <div class="item item-button-right">
+    Logout
+    <button class="button button-positive" ng-click="vm.logout()">
+      <i class="icon ion-power"></i>
+    </button>
+  </div>
             </div>
-        </div>
-
-        <button class="button button-outline button-block button-positive" ng-click="vm.editTask()">Add new Task</button>
     </ion-content>
 </ion-view>

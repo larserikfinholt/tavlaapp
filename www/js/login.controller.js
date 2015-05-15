@@ -49,17 +49,16 @@
 
 
         vm.logout = function () {
-            vm.result = null;
-            vm.testProp = null;
+                 window.localStorage['hasLoggedInBefore'] = 'no';
             TavlaService.logout().then(function (d) {
 
-                vm.result = d;
 
             });
-        }
+        };
 
         vm.init = function () {
             var hasLoggedInBefore = window.localStorage['hasLoggedInBefore'] || 'no';
+            console.log("HasLoggedInBefore: " + hasLoggedInBefore);
             if (hasLoggedInBefore == 'yes') {
                 vm.hasLoggedInBefore = true;
                 console.log("Waiting for platform ready...");

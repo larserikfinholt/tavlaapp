@@ -93,12 +93,12 @@ angular.module('tavla', ['ionic'])
                 }
             }
         })
-        .state('app.settings', {
-            url: "/settings",
+        .state('app.settings-main', {
+            url: "/settings/main",
             views: {
                 'menuContent': {
                     templateUrl: "templates/settings.html",
-                    controller: 'SettingsController as vm'
+                    controller: 'SettingsMainController as vm'
                 }
             },
             resolve: {
@@ -107,7 +107,34 @@ angular.module('tavla', ['ionic'])
                 }
             }
         })
-          .state('app.regular', {
+        .state('app.settings-main-users', {
+            url: "/settings/main/users",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/settings-main-users.html",
+                    controller: 'SettingsMainUsersController as vm'
+                }
+            },
+            resolve: {
+                settings: function (TavlaService) {
+                    return TavlaService.getSettings();
+                }
+            }
+        })
+             .state('app.settings-main-tasks', {
+            url: "/settings/main/tasks",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/settings-main-tasks.html",
+                    controller: 'SettingsMainTasksController as vm'
+                }
+            },
+            resolve: {
+                settings: function (TavlaService) {
+                    return TavlaService.getSettings();
+                }
+            }
+        }).state('app.regular', {
               url: "/regular",
               views: {
                   'menuContent': {
