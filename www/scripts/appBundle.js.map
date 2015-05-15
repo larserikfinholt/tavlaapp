@@ -1,1 +1,1 @@
-{"version":3,"file":"appBundle.js","sourceRoot":"","sources":[],"names":[],"mappings":""}
+{"version":3,"file":"appBundle.js","sourceRoot":"","sources":["../../www/js/typescript-test.ts"],"names":["jalla","jalla.constructor"],"mappings":"AACA,AADA,8CAA8C;IACxC,KAAK;IACPA,SADEA,KAAKA,CACKA,GAAGA;QACXC,OAAOA,CAACA,GAAGA,CAACA,SAASA,CAACA,CAACA;QACvBA,KAAKA,CAACA,QAAQA,CAACA,SAASA,EAAEA,CAACA;IAC/BA,CAACA;IAELD,YAACA;AAADA,CAACA,AAND,IAMC"}

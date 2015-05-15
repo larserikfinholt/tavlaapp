@@ -16,6 +16,11 @@
     },
     "azure-mobile-services-client/AzureMobileServicesClient.d.ts": {
       "commit": "68114f9ff37de0f92c94126b6e0164e026a1737a"
+    },
+    "ionic/ionic.d.ts": {
+      
     }
+    
   }
+  
 }

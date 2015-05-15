@@ -1,4 +1,5 @@
-﻿/// <reference path="../../typings/tsd.d.ts"/>
+﻿/* global WindowsAzure */
+/// <reference path="../../typings/tsd.d.ts"/>
 
 
 angular.module('tavla')

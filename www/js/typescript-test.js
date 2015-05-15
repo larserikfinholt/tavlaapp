@@ -6,4 +6,3 @@ var jalla = (function () {
     }
     return jalla;
 })();
-//# sourceMappingURL=appBundle.js.map
