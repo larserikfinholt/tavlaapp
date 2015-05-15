@@ -45,4 +45,7 @@
     <vs:plugin name="org.apache.cordova.inappbrowser" version="0.6.0" />
     <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
     <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
+    <feature name="SpeechRecognizer">
+        <param name="android-package" value="com.phonegap.plugins.speech.SpeechRecognizer" />
+    </feature>
 </widget>
