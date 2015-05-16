@@ -20,6 +20,9 @@ var tavla;
             this.tavlaService.logout().then(function (x) {
                 _this.$state.go('login');
                 console.log("Reloading....");
+                window.cookies.clear(function () {
+                    console.log('Cookies cleared!');
+                });
                 window.location.reload();
             });
         };

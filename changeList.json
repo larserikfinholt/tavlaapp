@@ -1913,7 +1913,15 @@
     ".git\\objects\\b7\\edba8eca4a8c5e983e9557548b677823bd740a",
     ".git\\objects\\af\\ed17e5e4dbb50aca82b381a887a31cb129bb8d",
     ".git\\objects\\73\\0032c0f2e62837427519bbaeefafc5f41b7aca",
-    ".git\\objects\\dc\\38ff39ded59fe74fcb7c952e02d5095b8f298c"
+    ".git\\objects\\dc\\38ff39ded59fe74fcb7c952e02d5095b8f298c",
+    "plugins\\com.bez4pieci.cookies\\plugin.xml",
+    "plugins\\com.bez4pieci.cookies\\LICENSE",
+    "plugins\\com.bez4pieci.cookies\\src\\android\\Cookies.java",
+    "plugins\\com.bez4pieci.cookies\\www\\cookies.js",
+    "plugins\\com.bez4pieci.cookies\\package.json",
+    "plugins\\com.bez4pieci.cookies\\src\\ios\\CDVCookies.h",
+    "plugins\\com.bez4pieci.cookies\\src\\ios\\CDVCookies.m",
+    "plugins\\com.bez4pieci.cookies\\README.md"
   ],
   "deletedFilesIos": [],
   "addedPluginsIos": [
@@ -1921,22 +1929,17 @@
     "org.apache.cordova.inappbrowser@0.6.0",
     "nl.x-services.plugins.insomnia@4.0.1",
     "nl.x-services.plugins.calendar@4.3.4",
-    "com.phonegap.plugins.speech@1.0.0"
+    "com.phonegap.plugins.speech@1.0.0",
+    "com.bez4pieci.cookies@0.0.1"
   ],
   "deletedPluginsIos": [],
   "changedFiles": [
+    "www\\js\\login.controller.js",
     ".git\\index",
     "plugins\\android.json",
     "www\\scripts\\appBundle.js.map",
     "www\\scripts\\appBundle.js",
-    "www\\css\\ionic.app.css",
-    "www\\css\\ionic.app.min.css",
-    "www\\templates\\home.html",
-    "scss\\ionic.app.scss",
-    ".git\\COMMIT_EDITMSG",
-    ".git\\logs\\refs\\heads\\feature_facebook_login",
-    ".git\\logs\\HEAD",
-    ".git\\refs\\heads\\feature_facebook_login"
+    "www\\js\\tavla.service.js"
   ],
   "deletedFiles": [],
   "addedPlugins": [],

@@ -61,9 +61,11 @@
                         console.warn("Fant ikke kalendar for item", d);
                     }
 
-                    d.user = _.find(data.settings.members, { calendars: d.calendar.name });
-                    if (!d.user) {
-                        //console.warn("Fant ikke bruker for kalender item", d);
+                    if (d.calendar) {
+                        d.user = _.find(data.settings.members, { calendars: d.calendar.name });
+                        if (!d.user) {
+                            //console.warn("Fant ikke bruker for kalender item", d);
+                        }
                     }
                     return d;
                 });

@@ -101,4 +101,5 @@
   <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
   <vs:plugin name="com.phonegap.plugins.speech" version="1.0.0" />
+  <vs:plugin name="com.bez4pieci.cookies" version="0.0.1" />
 </widget>

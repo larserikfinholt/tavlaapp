@@ -4,19 +4,33 @@
     </ion-header-bar>
 
     <ion-content class="center">
-        <div class="row" ng-hide="vm.hasLoggedInBefore">
-
+    <div ng-switch="vm.state">
+        <div data-ng-switch-when="default">
+        <div class="row">
             <div class="col">
-                <button class="button button-large button-block button-assertive" ng-click="vm.login()" type="submit">Google</button>
-                <button class="button button-large button-block button-positive" ng-click="vm.login()" type="submit">Facebook</button>
-                <span ng-show="vm.result.isLoggedIn">Logged in!</span>
+                <button class="button button-large button-block button-assertive" ng-click="vm.login('google')" type="submit">Google</button>
+                <button class="button button-large button-block button-positive" ng-click="vm.login('facebook')" type="submit">Facebook</button>
             </div>
         </div>
-        <div class="row" ng-show="vm.hasLoggedInBefore">
-            <div class="col">
-                <h3>Logger på...</h3>
-            </div>
+        <div data-ng-switch-when="autologin">
+            <p>Autologin....</p>
+        </div>            
         </div>
+        <div data-ng-switch-when="authenticating">
+            <p>Authenticating....</p>
+        </div>
+        <div data-ng-switch-when="login-in-process">
+            <p>Loading data from Tavla...</p>
+        </div>
+        <div data-ng-switch-when="login-fail">
+            <p>Login-fail</p>
+        </div>
+        <div data-ng-switch-when="authenticate-fail">
+            <p>Authenticate fail</p>
+        </div>
+    </div>
+    
+        
     </ion-content>
 
     <!--<ion-content>

@@ -1,4 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts"/>
+interface Window { cookies: any; }
 module tavla {
 	export class SettingsMainController {
 		public static $inject=['$state', 'TavlaService'];
@@ -16,6 +17,9 @@ module tavla {
 			this.tavlaService.logout().then(x=>{
 				this.$state.go('login');
 				console.log("Reloading....");
+				window.cookies.clear(function() {
+    console.log('Cookies cleared!');
+});
 				window.location.reload();
 			})
 		}

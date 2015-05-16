@@ -24,7 +24,7 @@ angular.module('tavla')
         weather: [],
         errors: [],
 
-        authenticate: function () {
+        authenticate: function (provider) {
             var dfd = $q.defer();
 
             if (window.tinyHippos != undefined ) {
@@ -39,8 +39,8 @@ angular.module('tavla')
                         window.plugins.insomnia.keepAwake();
                     }
                     console.log("Calling authenticate with google...");
-                    client.login('google').done(function (d) {
-                        console.log("Google login success", d);
+                    client.login(provider).done(function (d) {
+                        console.log("Login success", provider, d);
                         dfd.resolve({ isLoggedIn: true, user: d.userId });
                     }, function (e) {
                             console.warn("Noe gikk feil i google pålogging", e);
