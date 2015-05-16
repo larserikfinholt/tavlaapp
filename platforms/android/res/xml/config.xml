@@ -14,6 +14,9 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="SpeechRecognizer">
+        <param name="android-package" value="com.phonegap.plugins.speech.SpeechRecognizer" />
+    </feature>
     <icon density="ldpi" src="res/icons/android/icon-36-ldpi.png" />
     <icon density="mdpi" src="res/icons/android/icon-48-mdpi.png" />
     <icon density="hdpi" src="res/icons/android/icon-72-hdpi.png" />
@@ -45,7 +48,5 @@
     <vs:plugin name="org.apache.cordova.inappbrowser" version="0.6.0" />
     <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
     <vs:plugin name="nl.x-services.plugins.calendar" version="4.3.4" />
-    <feature name="SpeechRecognizer">
-        <param name="android-package" value="com.phonegap.plugins.speech.SpeechRecognizer" />
-    </feature>
+    <vs:plugin name="com.phonegap.plugins.speech" version="1.0.0" />
 </widget>

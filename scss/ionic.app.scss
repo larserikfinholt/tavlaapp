@@ -113,3 +113,14 @@ input, select {
 .tavla-text-alert {
     color:$energized;
 }
+
+.tavla-alerts-list-container {
+    position: absolute;
+     bottom: 32px; 
+     width: 100%
+}
+.tavla-active-alerts-list p {
+    color:$item-divider-color;
+    margin:0;
+    text-align: center;
+}

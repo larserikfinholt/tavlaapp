@@ -7728,3 +7728,13 @@ input, select {
 
 .tavla-text-alert {
   color: #ffc900; }
+
+.tavla-alerts-list-container {
+  position: absolute;
+  bottom: 32px;
+  width: 100%; }
+
+.tavla-active-alerts-list p {
+  color: #888;
+  margin: 0;
+  text-align: center; }

@@ -77,7 +77,7 @@
                         <button class="button button-clear button-positive" ng-click="vm.addShopping()">
                             Legg til
                         </button>
-                    </div>
+                    </div>{}
                     <div class="item">
                         <div  ng-click="vm.showShopping()">
                             <div ng-repeat="d in vm.tavlaService.shoppingList track by $index">
@@ -94,6 +94,15 @@
             </div>
         </div>
     </ion-content>
+        <!-- align to the bottom of the page -->
+    <div class="row tavla-alerts-list-container">
+        <div class="col col-bottom" ng-repeat="user in vm.tavlaService.saved.members" >
+           <div class="tavla-active-alerts-list" ng-show="user.alerts.length">
+                        <p data-ng-repeat="a in user.alerts">{{a.name}}</p>
+                    </div>
+
+        </div>
+    </div>
     <div class="bar bar-footer">
         <div class="button-bar">
             <button class="button button-dark" ng-repeat="user in vm.tavlaService.saved.members" ng-click="vm.showUserDialog(user)">
