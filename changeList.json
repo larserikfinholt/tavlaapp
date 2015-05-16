@@ -1925,13 +1925,18 @@
   ],
   "deletedPluginsIos": [],
   "changedFiles": [
-    ".git\\FETCH_HEAD",
     ".git\\index",
     "plugins\\android.json",
     "www\\scripts\\appBundle.js.map",
     "www\\scripts\\appBundle.js",
+    "www\\css\\ionic.app.css",
+    "www\\css\\ionic.app.min.css",
     "www\\templates\\home.html",
-    "scss\\ionic.app.scss"
+    "scss\\ionic.app.scss",
+    ".git\\COMMIT_EDITMSG",
+    ".git\\logs\\refs\\heads\\feature_facebook_login",
+    ".git\\logs\\HEAD",
+    ".git\\refs\\heads\\feature_facebook_login"
   ],
   "deletedFiles": [],
   "addedPlugins": [],

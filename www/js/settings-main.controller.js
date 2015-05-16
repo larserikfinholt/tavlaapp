@@ -19,6 +19,8 @@ var tavla;
             var _this = this;
             this.tavlaService.logout().then(function (x) {
                 _this.$state.go('login');
+                console.log("Reloading....");
+                window.location.reload();
             });
         };
         return SettingsMainController;

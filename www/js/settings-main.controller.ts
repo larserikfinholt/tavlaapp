@@ -15,6 +15,8 @@ module tavla {
 		logout(){
 			this.tavlaService.logout().then(x=>{
 				this.$state.go('login');
+				console.log("Reloading....");
+				window.location.reload();
 			})
 		}
 	}
