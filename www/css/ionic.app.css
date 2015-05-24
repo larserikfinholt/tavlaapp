@@ -7723,6 +7723,13 @@ input, select {
   padding-top: 30px;
   padding-bottom: 70px; }
 
+@media (min-width: 800) {
+  .tavla-pointsp {
+    font-size: 90px;
+    display: inline-block;
+    padding-top: 30px;
+    padding-bottom: 70px; } }
+
 .list.list-inset .list-item, .list-inset {
   background-color: #222; }
 
@@ -7746,3 +7753,12 @@ input, select {
   /* align horizontal */
   align-items: center;
   /* align vertical */ }
+
+@media (min-width: 800) {
+  .tavla-dialog-adjust {
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%; } }

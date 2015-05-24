@@ -1,4 +1,4 @@
-﻿<ion-modal-view style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
+﻿<ion-modal-view class="tavla-dialog-adjust">
     <ion-header-bar class=" bar bar-header bar-stable">
         <h1 class="title">Så bra, hva har du gjort?</h1>
         <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
@@ -21,7 +21,7 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <div class="tavla-points"><span>{{vm.points}}</span> poeng</div>
+                        <div><span  class="tavla-points">{{vm.points}}</span> <span class="tavla-pointsp">poeng</span> </div>
                     </div>
                 </div>
                 <div class="row">

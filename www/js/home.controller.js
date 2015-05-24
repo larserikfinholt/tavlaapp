@@ -110,7 +110,10 @@
         };
 
         function init() {
-            vm.tavlaService.getWeatherForecast();
+            vm.tavlaService.getWeatherForecast().then(function () {
+                vm.tavlaService.loadDoneItSummary();
+            });
+            
         }
 
         $ionicModal.fromTemplateUrl('templates/popup-user.html', {

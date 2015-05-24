@@ -78,6 +78,29 @@ angular.module('tavla')
             return dfd.promise;
 
         },
+        loadDoneItSummary:function(){
+            var self = this;
+            var dfd = $q.defer();
+            console.log("Loading doneit summary...");
+            client.invokeApi('summary', {
+                body: null,
+                method: "get",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            }).done(function (d) {
+                console.info("Loaded doneit summary", d.result);
+                self.summary = d.result;
+                dfd.resolve(d);
+            }, function (e) {
+                console.warn("Noe gikk feil i lasting av summary", e);
+                dfd.resolve({ isLoggedIn: false, error: e });
+            });
+
+            return dfd.promise;
+
+        },
 
         register: function (model) {
 
@@ -189,6 +212,10 @@ angular.module('tavla')
 
         },
         getPointsForUser: function (user) {
+
+            return this.getPointsForUserFromSummary(user);
+
+            // Old method
             var self = this;
             // Get last payment
             var usersDoneIts = _.where(self.doneIts, { user: user.name });
@@ -213,6 +240,31 @@ angular.module('tavla')
                 var task = _.find(self.tavlaSetting.tasks, function (t) { return t.data.taskTypeId === s.type; });
                 if (task) {
                     points = points + task.data.points;
+                } else {
+                    if (s.type === 1) {
+                        points = points + 10;
+                    }
+                    if (s.type != 1) {
+                        console.warn("Unable to find task for doneIt", s);
+                    }
+                }
+            });
+            return points;
+        },
+        getPointsForUserFromSummary: function (user) {
+            var self = this;
+            // Get last payment
+            var summary = _.where(self.summary, { name: user.name });
+
+            console.log("Calculating from summary", { summary:summary });
+
+            // Sum doneIts points
+            var points = 0;
+            _.each(summary, function (s) {
+                // get points for type
+                var task = _.find(self.tavlaSetting.tasks, function (t) { return t.data.taskTypeId === s.type; });
+                if (task) {
+                    points = points + (task.data.points*s.total);
                 } else {
                     if (s.type === 1) {
                         points = points + 10;
@@ -453,8 +505,12 @@ angular.module('tavla')
                 self.loadAllDoneIts().then(function () {
 
                     dfd.resolve();
-                    self.getWeatherForecast();
-
+                    self.getWeatherForecast().then(function () {
+                        self.loadDoneItSummary().then(function () {
+                            console.info("refresh complete");
+                        })
+                    });;
+                    
 
 
                 });
