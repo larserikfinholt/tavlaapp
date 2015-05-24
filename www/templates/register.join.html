@@ -1,27 +1,38 @@
-﻿<ion-modal-view>
+﻿<ion-view>
    
-    <ion-header-bar>
+    <ion-header-bar class="bar bar-dark">
         <div class="buttons">
             <button class="button-clear" ng-click="$ionicGoBack()"><i class="ion-arrow-left-c"></i> Back</button>
         </div>
-        <h1 class="title">Join Family</h1>
+        <h1 class="title">Join your Family</h1>
     </ion-header-bar>
     <ion-content>
-        
+        <div ng-switch="vm.state">
+            <div ng-switch-when="verify">
+                <label class="item item-input ">
+                    <span class="input-label">Family Name</span>
+                    <input type="text" ng-model="vm.joinFamilyName" placeholder="Family name">
+                </label>
 
-        <div class="list">
-            <label class="item item-input item-floating-label">
-                <span class="input-label">Family Name</span>
-                <input type="text" placeholder="Family name">
-            </label>
-         
-            <label class="item item-input item-floating-label">
-                <span class="input-label">Secret word</span>
-                <input type="text" placeholder="You'll get it from the person creating the family account'">
-            </label>
+                <label class="item item-input ">
+                    <span class="input-label">Family password</span>
+                    <input type="tel" ng-model="vm.joinFamilyPassword" placeholder="xxxx">
+                </label>
+                <p ng-show="vm.err">{{vm.err}}</p>
+                <button class="button button-block button-positive" ng-click="vm.tryRegister()" type="submit">Join family</button>
+            </div>
+            <div ng-switch-when="selectPerson">
+                <p>Who are you?</p>
+                <p ng-show="vm.err">{{vm.err}}</p>
+                
+                <button class="button button-block button-positive" ng-click="vm.tryRegister(p.name)" ng-repeat="p in vm.members|filter:{registered:false}" >{{p.name}}</button>
+                <p>Already registered a google or facebook login with Tavla</p>
+                <button class="button button-block button-dark" ng-click="vm.tryRegister(p.name)" ng-repeat="p in vm.members|filter:{registered:true}" disabled>{{p.name}} (registered)</button>
+            </div>
         </div>
+     
+           
 
-        <button class="button button-block button-calm" ng-click="vm.join()" type="submit">Join family</button>
         <pre>{{vm|json}}</pre>
     </ion-content>
-</ion-modal-view>
+</ion-view>

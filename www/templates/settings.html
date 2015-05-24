@@ -6,18 +6,18 @@
       
             <div class="list list-inset">
 
-                <a class="item item-icon-left item-icon-right" ng-click="vm.usersClick()">
+                <a class="item item-icon-left item-icon-right" ng-click="vm.usersClick()" ng-show="vm.tavlaService.saved.currentUser.isAdmin">
                     <i class="icon ion-person"></i>
                     Users
                    <i class="icon ion-arrow-right-c"></i>
                 </a>
-                <a class="item item-icon-left item-icon-right" ng-click="vm.tasksClick()">
+                <a class="item item-icon-left item-icon-right" ng-click="vm.tasksClick()"  ng-show="vm.tavlaService.saved.currentUser.isAdmin">
                     <i class="icon ion-checkmark"></i>
                     Tasks
                    <i class="icon ion-arrow-right-c"></i>
                 </a>
                 <div class="item item-button-right">
-    Logout
+    Logout ({{vm.tavlaService.saved.currentUser.name}})
     <button class="button button-positive" ng-click="vm.logout()">
       <i class="icon ion-power"></i>
     </button>

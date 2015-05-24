@@ -39,6 +39,7 @@ angular.module('tavla', ['ionic'])
             controller: "LoginController as vm"
         })
         .state('register', {
+            url: '/login/register',
             templateUrl: "templates/register.html",
             controller: "RegisterController as vm",
             resolve: {
@@ -46,6 +47,7 @@ angular.module('tavla', ['ionic'])
             }
         })
         .state('newfamily', {
+            url: '/login/newfamily',
             templateUrl: "templates/register.newfamily.html",
             controller: "RegisterController as vm",
             resolve: {
@@ -53,8 +55,9 @@ angular.module('tavla', ['ionic'])
             }
         })
         .state('join', {
+            url: '/login/join',
             templateUrl: "templates/register.join.html",
-            controller: "RegisterController as vm",
+            controller: "RegisterJoinController as vm",
             resolve: {
                 mode: function () { return 'join'; }
             }

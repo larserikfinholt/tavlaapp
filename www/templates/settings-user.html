@@ -13,7 +13,7 @@
                 <select ng-model="vm.user.calendars" ng-options="c.name as c.name for c in vm.calendars"></select>
             </label>
             <div class="item">
-                {{vm.user.id?'Has connected phone to Tavla':'Has not connected phone to Tavla yet'}}
+                {{vm.user.userId?'Has added Facebook or google login':'Not connected with Tavla'}}
             </div>
             <div class="item item-checkbox">
                 <label class="checkbox">

@@ -7738,3 +7738,11 @@ input, select {
   color: #888;
   margin: 0;
   text-align: center; }
+
+.tavla-center {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */ }

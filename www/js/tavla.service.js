@@ -92,7 +92,7 @@ angular.module('tavla')
                 console.log("Logged in", d.result);
                 self.isSettingsLoaded = true;
                 self.saved = d.result;
-                dfd.resolve({ saved: true, result: d });
+                dfd.resolve({ saved: true, result: d.result });
             }, function (d) {
                     console.warn("Fikk ikke registrert", d);
                     dfd.resolve({ error: d });
